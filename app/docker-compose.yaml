@@ -1,0 +1,32 @@
+version: "3.5"
+
+services:
+    mongodb-auth:
+        image: mongo:4.2.3-bionic
+        container_name: mongodb-auth
+        ports:
+            - 27015:27017
+
+    mongodb-compute:
+        image: mongo:4.2.3-bionic
+        container_name: mongodb-compute
+        ports:
+            - 27016:27017
+
+    mongodb-network:
+        image: mongo:4.2.3-bionic
+        container_name: mongodb-network
+        ports:
+            - 27017:27017
+
+    mongodb-storage:
+        image: mongo:4.2.3-bionic
+        container_name: mongodb-storage
+        ports:
+            - 27018:27017
+
+    mongodb-bus:
+        image: mongo:4.2.3-bionic
+        container_name: mongodb-bus
+        ports:
+            - 27019:27017
