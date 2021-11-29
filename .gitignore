@@ -1,0 +1,4 @@
+/app/API-Gateway/node_modules
+/app/auth/node_modules
+
+/app/auth/mongo-data

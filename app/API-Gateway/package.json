@@ -1,5 +1,5 @@
 {
-  "name": "auth",
+  "name": "api-gateway",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -10,13 +10,14 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@grpc/proto-loader": "^0.6.7",
-    "bcryptjs": "^2.4.3",
+    "@grpc/grpc-js": "^1.4.4",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
-    "grpc": "^1.24.11",
+    "events": "^3.3.0",
+    "express": "^4.17.1",
     "grpc-caller": "^0.14.0",
-    "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.10.4",
+    "morgan": "^1.10.0",
     "nodemon": "^2.0.15"
   }
 }

@@ -4,6 +4,8 @@ services:
     mongodb-auth:
         image: mongo:4.2.3-bionic
         container_name: mongodb-auth
+        volumes: 
+            - ./auth/mongo-data:/data/db
         ports:
             - 27015:27017
 
