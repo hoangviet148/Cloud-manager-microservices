@@ -10,13 +10,17 @@ message User {
     string email = 5;
     string phone = 6;
     string payment = 7;
-    Tier tier = 8;
+    string tier = 8;
 }
 
 message Tier {
     string tierName = 1;
-    float cost = 2;
-    repeated User users = 3;
+    string cost = 2;
+    int32 MaxIOPerSec = 3;
+    int32 Analytics = 4;
+    int32 MaxRamPerCompute = 5;
+    repeated string cpus = 6;
+    repeated string users = 7;
 }
 
 message LoginRequest {
@@ -24,11 +28,11 @@ message LoginRequest {
     string password = 2;
 }
 
-message Token {
-    string token = 1;
+message Message {
+    string message = 1;
 }
 
 service AuthService {
-    rpc register(User) returns (Empty) {}
-    rpc login(LoginRequest) returns (Token) {}
+    rpc register(User) returns (Message) {}
+    rpc login(LoginRequest) returns (Message) {}
 }

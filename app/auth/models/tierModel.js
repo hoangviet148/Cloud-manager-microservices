@@ -6,6 +6,21 @@ const tierSchema = new Schema({
     tierName: {
         type: String
     },
+    cost: {
+        type: String
+    },
+    MaxIOPerSec: {
+        type: Number
+    },
+    Analytics: {
+        type: String
+    },
+    MaxRamPerCompute: {
+        type: Number
+    },
+    CPU: [{
+        type: String
+    }],
     users: [{
         type: Schema.Types.ObjectId,
         ref: User

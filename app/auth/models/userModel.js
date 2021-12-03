@@ -1,9 +1,8 @@
 const mongoose = require("mongoose");
-const Tier = require("./tierModel")
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-    userName: {
+    username: {
         type: String
     },
     password: {
@@ -22,8 +21,7 @@ const userSchema = new Schema({
         type: String
     },
     tier: {
-        type: Schema.Types.ObjectId,
-        ref: Tier
+        type: String
     }
 });
 

@@ -11,7 +11,6 @@ const port = 8081
 const serviceName = 'Auth Service'
 const User = require("./models/userModel");
 const Tier = require("./models/tierModel");
-console.log(process.env.AUTH_PROTO_PATH)
 let packageDefinition = protoLoader.loadSync(process.env.AUTH_PROTO_PATH, {})
 let authProto = grpc.loadPackageDefinition(packageDefinition);
 
@@ -31,27 +30,39 @@ mongoose.connect(
 
 app.addService(authProto.AuthService.service, {
     register: async (call, callback) => {
-        console.log(call.request)
+        let req = call.request
+        console.log("req:" + req)
         try {
-
-            const emailExists = await User.findOne({ email: email });
+            const emailExists = await User.findOne({ email: req.email });
+            console.log("emailExists:" + emailExists)
             if (emailExists) {
-                callback(null, "Email is exists")
+                throw "Email is exists"
             }
             // save user
             const salt = await bcryptjs.genSalt(10);
-            const hash = await bcryptjs.hash(password, salt);
-            let user = call.request;
+            const hash = await bcryptjs.hash(req.password, salt);
             let newUser = new User({
-                userId: user.userId,
-                products: user.products,
-                password: hash
+                "_id": new mongoose.Types.ObjectId(),
+                "username": req.username,
+                "password": hash,
+                "role": req.role,
+                "email": req.email,
+                "phone": req.phone,
+                "payment": req.payment,
+                "tier": req.tier
             });
+            // save user
             await newUser.save();
-            callback(null, newUser);
+
+            // add new user to tier
+            let tier = await Tier.findOne({ tierName: req.tier })
+            tier.users.push(newUser._id)
+            await tier.save()
+
+            callback(null, { message: "Insert success!" });
         } catch (error) {
-            console.log(error + " ")
-            callback(null, error);
+            console.log("error: ", error)
+            callback(null, { message: error + " " });
         }
     },
     login: async (call, callback) => {
@@ -61,11 +72,11 @@ app.addService(authProto.AuthService.service, {
             const password = call.request.password;
             const user = await User.findOne({ email: email });
             if (!user) {
-                callback(null, { email: "Email not found" });
+                throw "Email not found"
             }
             const isMatch = await bcryptjs.compare(password, user.password);
             if (!isMatch) {
-                callback(null, { email: "Password is wrong" });
+                throw "Password is wrong"
             }
             const payload = {
                 userId: user._id,
@@ -74,10 +85,10 @@ app.addService(authProto.AuthService.service, {
             };
 
             const token = await jwt.sign(payload, "secret", { expiresIn: "24h" });
-            callback(null, { token: token });
+            callback(null, { message: token });
         } catch (error) {
-            console.log(error + " ")
-            callback(null, error);
+            console.log("error: ", error)
+            callback(null, { "message": error });
         }
     }
 })
