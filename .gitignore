@@ -1,5 +1,5 @@
 /app/API-Gateway/node_modules
 /app/auth/node_modules
 /app/auth/mongo-data
-/app/frontend/node_modules
+/app/frontend1/node_modules
 /app/jenkins
