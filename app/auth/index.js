@@ -15,7 +15,7 @@ let packageDefinition = protoLoader.loadSync(process.env.AUTH_PROTO_PATH, {})
 let authProto = grpc.loadPackageDefinition(packageDefinition);
 
 // Connect database
-const db = "mongodb://127.0.0.1:27015/cloud";
+const db = "mongodb://mongodb-auth:27017/cloud";
 mongoose.connect(
     db,
     { useNewUrlParser: true, useUnifiedTopology: true },

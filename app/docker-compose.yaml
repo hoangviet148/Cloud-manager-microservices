@@ -1,34 +1,57 @@
 version: "3.5"
 
 services:
+    frontend:
+        container_name: frontend
+        build:
+            context: ./frontend/
+            dockerfile: Dockerfile
+        volumes:
+            - ./frontend:/app
+        ports:
+            - "80:80"
+            - "8088:8088"
+
+
+    api-gateway:
+        container_name: API-Gateway
+        build:
+            context: ./API-Gateway/
+            dockerfile: Dockerfile
+        volumes:
+          - ./API-Gateway:/app
+        ports:
+            - "8080:8080"
+
+
+    auth-service:
+        container_name: auth-service
+        build:
+            context: ./auth/
+            dockerfile: Dockerfile
+        volumes:
+            - ./auth:/app
+        ports:
+            - "8081:8081"
+
+
     mongodb-auth:
         image: mongo:4.2.3-bionic
         container_name: mongodb-auth
-        volumes: 
-            - ./auth/mongo-data:/data/db
+        # volumes: 
+        #     - ./auth/mongo-data:/data/db
         ports:
             - 27015:27017
 
-    mongodb-compute:
-        image: mongo:4.2.3-bionic
-        container_name: mongodb-compute
+    jenkins:
+        image: jenkins/jenkins:lts
+        privileged: true
+        user: root
         ports:
-            - 27016:27017
-
-    mongodb-network:
-        image: mongo:4.2.3-bionic
-        container_name: mongodb-network
-        ports:
-            - 27017:27017
-
-    mongodb-storage:
-        image: mongo:4.2.3-bionic
-        container_name: mongodb-storage
-        ports:
-            - 27018:27017
-
-    mongodb-bus:
-        image: mongo:4.2.3-bionic
-        container_name: mongodb-bus
-        ports:
-            - 27019:27017
+        - 8087:8080
+        - 50000:50000
+        container_name: jenkins
+        volumes:
+            - ./jenkins:/var/jenkins_home
+            - /var/run/docker.sock:/var/run/docker.sock
+            - /usr/bin/docker:/usr/bin/docker
