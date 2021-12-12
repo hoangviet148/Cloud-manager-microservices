@@ -1,16 +1,16 @@
 version: "3.5"
 
 services:
-    frontend:
-        container_name: frontend
-        build:
-            context: ./frontend/
-            dockerfile: Dockerfile
-        volumes:
-            - ./frontend:/app
-        ports:
-            - "80:80"
-            - "8088:8088"
+    # frontend:
+    #     container_name: frontend
+    #     build:
+    #         context: ./frontend/
+    #         dockerfile: Dockerfile
+    #     volumes:
+    #         - ./frontend:/app
+    #     ports:
+    #         - "80:80"
+    #         - "8088:8088"
 
 
     api-gateway:
