@@ -1,6 +1,7 @@
 const authClient = require("../grpc-client/auth/authClient")
 
 module.exports.register = async (req, res) => {
+    console.log("api gateway - register controller")
     try {
         let user = {
             "username": req.body.username,
