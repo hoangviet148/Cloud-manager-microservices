@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+message Compute {
+    string id = 1;
+    string name = 2;
+    string ownerID = 3;
+    string state = 4;
+    string IPv4 = 5;
+}
+
+message Message {
+    string message = 1;
+}
+
+service ComputeService {
+    rpc createCompute(Compute) returns (Message) {}
+}

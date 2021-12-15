@@ -10,7 +10,7 @@ const port = 8080
 const serviceName = 'API Gateway'
 
 const authRoute = require("./routes/authRoute");
-// const orderRoute = require("./routes/orderRoute");
+const networkRoute = require("./routes/networkRoute");
 // const productRoute = require("./routes/productRoute");
 
 // Middleware
@@ -24,6 +24,7 @@ app.use(cors());
 
 // Router
 app.use("/api/auth", authRoute);
+app.use("/api/network", networkRoute);
 
 let emitter = new events.EventEmitter();
 emitter.setMaxListeners(0)

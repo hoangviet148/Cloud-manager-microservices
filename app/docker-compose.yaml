@@ -35,6 +35,37 @@ services:
             - "8081:8081"
 
 
+    network-service:
+        container_name: network-service
+        build:
+            context: ./network/
+            dockerfile: Dockerfile
+        volumes:
+            - ./network:/app
+        ports:
+            - "8082:8082"
+
+    compute-service:
+        container_name: compute-service
+        build:
+            context: ./compute/
+            dockerfile: Dockerfile
+        volumes:
+            - ./compute:/app
+        ports:
+            - "8083:8083"
+
+    resource-service:
+        container_name: compute-resource
+        build:
+            context: ./resource/
+            dockerfile: Dockerfile
+        volumes:
+            - ./resource:/app
+        ports:
+            - "8084:8084"
+
+
     mongodb-auth:
         image: mongo:4.2.3-bionic
         container_name: mongodb-auth
@@ -43,6 +74,31 @@ services:
         ports:
             - 27015:27017
 
+
+    mongodb-network:
+        image: mongo:4.2.3-bionic
+        container_name: mongodb-network
+        volumes: 
+            - ./network/mongo-data:/data/db
+        ports:
+            - 27016:27017
+
+    mongodb-compute:
+        image: mongo:4.2.3-bionic
+        container_name: mongodb-compute
+        volumes: 
+            - ./compute/mongo-data:/data/db
+        ports:
+            - 27017:27017
+
+    mongodb-resource:
+        image: mongo:4.2.3-bionic
+        container_name: mongodb-resource
+        volumes: 
+            - ./resource/mongo-data:/data/db
+        ports:
+            - 27018:27017
+         
     jenkins:
         image: jenkins/jenkins:lts
         privileged: true

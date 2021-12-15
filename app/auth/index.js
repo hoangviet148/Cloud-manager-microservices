@@ -55,7 +55,7 @@ app.addService(authProto.AuthService.service, {
             await newUser.save();
 
             // add new user to tier
-            let tier = await Tier.findOne({ tierName: req.tier })
+            let tier = await Tier.findOne({ name: req.tier })
             tier.users.push(newUser._id)
             await tier.save()
 

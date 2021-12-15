@@ -1,5 +1,17 @@
 /app/API-Gateway/node_modules
+
 /app/auth/node_modules
 /app/auth/mongo-data
+
 /app/frontend/node_modules
+
 /app/jenkins
+
+/app/network/node_modules
+/app/network/mongo-data
+
+/app/compute/node_modules
+/app/compute/mongo-data
+
+/app/resource/node_modules
+/app/resource/mongo-data
