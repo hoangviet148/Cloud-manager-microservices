@@ -15,7 +15,7 @@ let packageDefinition = protoLoader.loadSync(process.env.AUTH_PROTO_PATH, {})
 let authProto = grpc.loadPackageDefinition(packageDefinition);
 
 // Connect database
-const db = "mongodb://localhost:27015/cloud";
+const db = "mongodb://mongodb-auth:27017/cloud";
 mongoose.connect(
     db,
     { useNewUrlParser: true, useUnifiedTopology: true },
@@ -93,6 +93,6 @@ app.addService(authProto.AuthService.service, {
     }
 })
 
-app.bind(`127.0.0.1:${port}`, grpc.ServerCredentials.createInsecure())
+app.bind(`auth-service:${port}`, grpc.ServerCredentials.createInsecure())
 console.log(`${serviceName} running at port ${port}`)
 app.start()

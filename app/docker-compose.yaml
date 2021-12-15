@@ -1,16 +1,16 @@
 version: "3.5"
 
 services:
-    # frontend:
-    #     container_name: frontend
-    #     build:
-    #         context: ./frontend/
-    #         dockerfile: Dockerfile
-    #     volumes:
-    #         - ./frontend:/app
-    #     ports:
-    #         - "80:80"
-    #         - "8088:8088"
+    frontend:
+        container_name: frontend
+        build:
+            context: ./frontend/
+            dockerfile: Dockerfile
+        volumes:
+            - ./frontend:/app
+        ports:
+            - "80:80"
+            - "3000:3000"
 
 
     api-gateway:
@@ -38,8 +38,8 @@ services:
     mongodb-auth:
         image: mongo:4.2.3-bionic
         container_name: mongodb-auth
-        # volumes: 
-        #     - ./auth/mongo-data:/data/db
+        volumes: 
+            - ./auth/mongo-data:/data/db
         ports:
             - 27015:27017
 

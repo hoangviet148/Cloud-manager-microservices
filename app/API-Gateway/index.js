@@ -20,11 +20,7 @@ app.use(
     })
 );
 app.use(logger("dev"));
-app.use(
-    cors({
-        exposedHeaders: "*",
-    })
-);
+app.use(cors());
 
 // Router
 app.use("/api/auth", authRoute);

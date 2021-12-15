@@ -1,5 +1,4 @@
-FROM node:14-stretch-slim
-
+FROM node:12.9.1
 WORKDIR /app
 
 COPY . .

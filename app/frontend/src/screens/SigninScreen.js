@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useSelector, useDispatch } from 'react-redux';
-//import { signin } from '../actions/userActions';
+import { signin } from '../actions/userActions';
 import Alert from '@material-ui/lab/Alert';
 
 
@@ -38,15 +38,18 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function SigninScreen(props) {
-
+  console.log("SigninScreen")
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  //const userSignin = useSelector(state => state.userSignin);
-  const userSignin = ""
+  const userSignin = useSelector(state => state.userSignin);
+  //const userSignin = ""
   const { loading, userInfo, error } = userSignin;
   const dispatch = useDispatch();
-  const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
 
+  const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
+  console.log(redirect)
+
+  
   useEffect(() => {
     if (userInfo) {
       props.history.push(redirect);
@@ -55,7 +58,7 @@ function SigninScreen(props) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    //dispatch(signin(email, password));
+    dispatch(signin(email, password));
   }
 
   const classes = useStyles();
