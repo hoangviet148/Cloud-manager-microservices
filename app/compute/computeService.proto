@@ -2,10 +2,14 @@ syntax = "proto3";
 
 message Compute {
     string id = 1;
-    string name = 2;
+    string hostname = 2;
     string ownerID = 3;
-    string state = 4;
-    string IPv4 = 5;
+    string networkID = 4;
+    string state = 5;
+    string IPv4 = 6;
+    string disk = 7;
+    string ram = 8;
+    string cpu = 9;
 }
 
 message Message {
@@ -13,5 +17,5 @@ message Message {
 }
 
 service ComputeService {
-    rpc createNetwork(Compute) returns (Message) {}
+    rpc createCompute(Compute) returns (Message) {}
 }

@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+message Image {
+    string id = 1;
+    string name = 2;
+    string ownerID = 3;
+    string state = 4;
+}
+
+
+message Disk {
+    string id = 1;
+    string name = 2;
+}
+
+
+message Ram {
+    string id = 1;
+    string name = 2;
+}
+
+
+message Cpu {
+    string id = 1;
+    string name = 2;
+    string ownerID = 3;
+}
+
+message Message {
+    string message = 1;
+}
+
+service ResourceService {
+    // createNetwork(Network) returns (Message) {}
+}

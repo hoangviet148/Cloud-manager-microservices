@@ -8,7 +8,7 @@ const port = 8082
 
 const serviceName = 'Network Service'
 const Network = require("./networkModel");
-let packageDefinition = protoLoader.loadSync(process.env.AUTH_PROTO_PATH, {})
+let packageDefinition = protoLoader.loadSync(process.env.NETWORK_PROTO_PATH, {})
 let networkProto = grpc.loadPackageDefinition(packageDefinition);
 
 // Connect database
@@ -38,6 +38,7 @@ app.addService(networkProto.NetworkService.service, {
 
             let newNetwork = new Network({
                 "ownerID": req.ownerID,
+                "name": req.name,
                 "state": req.state,
                 "IPv4": req.IPv4
             })
