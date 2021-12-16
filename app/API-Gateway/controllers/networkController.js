@@ -5,7 +5,7 @@ module.exports.createNetwork = async (req, res) => {
     try {
         let network = {
             "ownerID": req.body.ownerID,
-            "name": req.body.name
+            "name": req.body.name,
             "IPv4": req.body.IPv4,
             "state": req.body.state,
         }

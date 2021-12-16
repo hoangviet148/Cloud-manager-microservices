@@ -10,7 +10,7 @@ const register = (name, email, phone, tier, payment, password) => async (dispatc
     console.log("register action")
     dispatch({ type: USER_REGISTER_REQUEST, payload: { name, email, phone, tier, payment, password } });
     try {
-        const { data } = await axios.post("http://localhost:8080/api/auth/register", { name, email, phone, tier, payment, password });
+        const { data } = await axios.post("api-gateway:8080/api/auth/register", { name, email, phone, tier, payment, password });
         dispatch({ type: USER_REGISTER_SUCCESS, payload: data });
         Cookie.set('userInfo', JSON.stringify(data));
     } catch (error) {
@@ -22,7 +22,7 @@ const signin = (email, password) => async (dispatch) => {
     console.log("login action")
     dispatch({ type: USER_SIGNIN_REQUEST, payload: { email, password } });
     try {
-      const { data } = await axios.post("http://localhost:8080/api/auth/login", { email, password });
+      const { data } = await axios.post("api-gateway:8080/api/auth/login", { email, password });
       dispatch({ type: USER_SIGNIN_SUCCESS, payload: data });
       Cookie.set('userInfo', JSON.stringify(data));
     } catch (error) {

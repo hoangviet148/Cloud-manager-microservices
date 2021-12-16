@@ -1,1 +1,9 @@
-FROM node:12.16.3-alpine3.9
+FROM node:12.9.1
+WORKDIR /app
+
+COPY . .
+
+RUN npm install
+
+EXPOSE 8081
+CMD [ "npm", "start" ]

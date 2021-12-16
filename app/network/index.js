@@ -43,7 +43,7 @@ app.addService(networkProto.NetworkService.service, {
             })
             // save network
             await newNetwork.save();
-            callback(null, { message: "Insert success!" });
+            callback(null, { message: "Create network success!" });
         } catch (error) {
             console.log("error: ", error)
             callback(null, { message: error  });
