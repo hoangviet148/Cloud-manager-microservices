@@ -21,12 +21,13 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
-//import HomeScreen from './screens/HomeScreen';
+import HomeScreen from './screens/HomeScreen';
 //import ProductScreen from './screens/ProductScreen';
 import { Button, Grid } from '@material-ui/core';
 //import CartScreen from './screens/CartScreen';
 import SigninScreen from './screens/SigninScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import TierList from './screens/TierList';
 //import ProductList from './screens/ProductList';
 //import ShippingScreen from './screens/ShippingScreen';
 //import PaymentScreen from './screens/PaymentScreen';
@@ -165,49 +166,49 @@ export default function SideBar() {
                     <Divider />
                     <List>
                         <ListItem button>
-                            <Link to="../category/Kit" style={{ textDecoration: 'none', color: '#203040' }}>
+                            <Link to="/compute" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
                                         <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <ListItemText style={{ paddingLeft: '2rem' }}>Compute</ListItemText>
+                                        <ListItemText style={{ paddingLeft: '0.5rem' }}>Compute</ListItemText>
                                     </Grid>
                                 </Grid>
                             </Link>
                         </ListItem>
                         <ListItem button>
-                            <Link to="../category/Accessories" style={{ textDecoration: 'none', color: '#203040' }}>
+                            <Link to="/network" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
                                         <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <ListItemText style={{ paddingLeft: '0.5rem' }}>Accessories</ListItemText>
+                                        <ListItemText style={{ paddingLeft: '0.5rem' }}>Network</ListItemText>
                                     </Grid>
                                 </Grid>
                             </Link>
                         </ListItem>
                         <ListItem button>
-                            <Link to="../category/Ball" style={{ textDecoration: 'none', color: '#203040' }}>
+                            <Link to="/tier" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
                                         <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <ListItemText style={{ paddingLeft: '1.8rem' }}>Ball</ListItemText>
+                                        <ListItemText style={{ paddingLeft: '1.1rem' }}>Tier</ListItemText>
                                     </Grid>
                                 </Grid>
                             </Link>
                         </ListItem>
                         <ListItem button>
-                            <Link to="../category/Poster" style={{ textDecoration: 'none', color: '#203040' }}>
+                            <Link to="/resource" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
                                         <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <ListItemText style={{ paddingLeft: '1.4rem' }}>Poster</ListItemText>
+                                        <ListItemText style={{ paddingLeft: '0.2rem' }}>Resource</ListItemText>
                                     </Grid>
                                 </Grid>
                             </Link>
@@ -220,20 +221,21 @@ export default function SideBar() {
                     <div className={classes.drawerHeader} />
                     <div className="content" style={{ minHeight: '37rem' }}>
                         {/* <Route path="/product/:id" component={ProductScreen} /> */}
-            {/* <Route path="/cart/:id?" component={CartScreen} /> */}
-            {/* <Route path="/" exact={true} component={HomeScreen} /> */}
-            <Route path="/signin" component={SigninScreen} />
-            <Route path="/register" component={RegisterScreen} />
-            {/* <Route path="/product-create" component={ProductCreateForm} /> */}
-            {/* <Route path="/product-update/:id" component={ProductUpdateForm} /> */}
-            {/* <Route path="/products-list" component={ProductList} /> */}
-            {/* <Route path="/shipping" component={ShippingScreen} /> */}
-            {/* <Route path="/payment" component={PaymentScreen} /> */}
-            {/* <Route path="/placeorder" component={PlaceOrderScreen} /> */}
-            {/* <Route path="/profile" component={ProfileScreen} /> */}
-            {/* <Route path="/orders-list" component={OrdersScreen} /> */}
-            {/* <Route path="/category/:id" component={HomeScreen} /> */}
-            {/* <Route path="/users" component={UserList} /> */}
+                        {/* <Route path="/cart/:id?" component={CartScreen} /> */}
+                        <Route path="/" exact={true} component={HomeScreen} />
+                        <Route path="/signin" component={SigninScreen} />
+                        <Route path="/register" component={RegisterScreen} />
+                        <Route path="/tier" component={TierList} />
+                        {/* <Route path="/product-create" component={ProductCreateForm} /> */}
+                        {/* <Route path="/product-update/:id" component={ProductUpdateForm} /> */}
+                        {/* <Route path="/products-list" component={ProductList} /> */}
+                        {/* <Route path="/shipping" component={ShippingScreen} /> */}
+                        {/* <Route path="/payment" component={PaymentScreen} /> */}
+                        {/* <Route path="/placeorder" component={PlaceOrderScreen} /> */}
+                        {/* <Route path="/profile" component={ProfileScreen} /> */}
+                        {/* <Route path="/orders-list" component={OrdersScreen} /> */}
+                        {/* <Route path="/category/:id" component={HomeScreen} /> */}
+                        {/* <Route path="/users" component={UserList} /> */}
                     </div>
                 </main>
             </div>

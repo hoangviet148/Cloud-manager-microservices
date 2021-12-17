@@ -44,3 +44,33 @@ module.exports.deleteUser = async (req, res) => {
 
     }
 }
+
+module.exports.createTier = async (req, res) => {
+    console.log("api gateway - createTier controller")
+    try {
+        let tier = {
+            "name": req.body.name,
+            "cost": req.body.cost,
+            "maxIOPerSec": req.body.maxIOPerSec,
+            "analytics": req.body.analytics,
+        }
+        let response = await authClient.createTier(tier);
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}
+
+module.exports.getListTiers = async (req, res) => {
+    console.log("api gateway - getListTiers controller")
+    try {
+        let response = await authClient.getListTiers();
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}

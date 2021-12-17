@@ -14,13 +14,16 @@ message User {
 }
 
 message Tier {
-    string tierName = 1;
-    string cost = 2;
-    int32 MaxIOPerSec = 3;
-    int32 Analytics = 4;
-    int32 MaxRamPerCompute = 5;
-    repeated string cpus = 6;
-    repeated string users = 7;
+    string id = 1;
+    string name = 2;
+    string cost = 3;
+    int32 maxIOPerSec = 4;
+    bool analytics = 5;
+    repeated string users = 6;
+}
+
+message Tiers {
+    repeated Tier tiers = 1;
 }
 
 message LoginRequest {
@@ -35,4 +38,6 @@ message Message {
 service AuthService {
     rpc register(User) returns (Message) {}
     rpc login(LoginRequest) returns (Message) {}
+    rpc createTier(Tier) returns (Message) {}
+    rpc getListTiers(Empty) returns (Tiers) {}
 }

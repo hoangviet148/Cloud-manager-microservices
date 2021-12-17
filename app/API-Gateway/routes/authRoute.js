@@ -11,4 +11,12 @@ router
     .route("/login")
     .post(controller.login);
 
+router
+    .route("/createTier")
+    .post(controller.createTier);
+
+router
+    .route("/getListTiers")
+    .get(controller.getListTiers);
+
 module.exports = router;

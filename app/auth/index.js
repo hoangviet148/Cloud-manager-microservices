@@ -62,7 +62,7 @@ app.addService(authProto.AuthService.service, {
             callback(null, { message: "Insert success!" });
         } catch (error) {
             console.log("error: ", error)
-            callback(null, { message: error  });
+            callback(null, { message: error });
         }
     },
     login: async (call, callback) => {
@@ -88,7 +88,41 @@ app.addService(authProto.AuthService.service, {
             callback(null, { message: token });
         } catch (error) {
             console.log("error: ", error)
-            callback(null, { "message": error });
+            callback(null, { "message": error + " " });
+        }
+    },
+    createTier: async (call, callback) => {
+        let req = call.request
+        console.log("req:" + req.name)
+        try {
+            const tierExists = await Tier.findOne({ name: req.name });
+            console.log("tierExists:" + tierExists)
+            if (tierExists) {
+                throw "Tier is exists"
+            }
+            let newTier = new Tier({
+                "_id": new mongoose.Types.ObjectId(),
+                "name": req.name,
+                "cost": req.cost,
+                "analytics": req.analytics,
+                "users": []
+            });
+            // save tier
+            await newTier.save();
+            callback(null, { message: "Create tier success!" });
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
+        }
+    },
+    getListTiers: async (call, callback) => {
+        console.log("auth-service - getListTiers")
+        try {
+            let tiers = await Tier.find();
+            callback(null, { tiers: tiers });
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
         }
     }
 })

@@ -3,24 +3,18 @@ const Schema = mongoose.Schema;
 const User = require("./userModel")
 
 const tierSchema = new Schema({
-    tierName: {
+    name: {
         type: String
     },
     cost: {
         type: String
     },
-    MaxIOPerSec: {
+    maxIOPerSec: {
         type: Number
     },
-    Analytics: {
+    analytics: {
         type: String
     },
-    MaxRamPerCompute: {
-        type: Number
-    },
-    CPU: [{
-        type: String
-    }],
     users: [{
         type: Schema.Types.ObjectId,
         ref: User
