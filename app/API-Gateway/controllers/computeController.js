@@ -4,7 +4,7 @@ module.exports.createInstance = async (req, res) => {
     console.log("api gateway - createCompute controller")
     try {
         let compute = {
-            "hostname": req.body.hostname, 
+            "hostname": req.body.hostname,
             "ownerID": req.body.ownerID,
             "networkID": req.body.networkID,
             "status": req.body.status,
@@ -39,7 +39,23 @@ module.exports.getInstanceByID = async (req, res) => {
     try {
         let id = req.params.id;
         console.log("InstanceID:", id)
-        let response = await computeClient.getInstanceByID({id: id});
+        let response = await computeClient.getInstanceByID({ id: id });
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}
+
+module.exports.changeInstanceStatus = async (req, res) => {
+    console.log("api gateway - changeInstanceStatus controller")
+    try {
+        console.log("body:", req.body)
+        let response = await computeClient.changeInstanceStatus({
+            "_id": req.body._id,
+            "status": req.body.status
+        });
         console.log("response: ", response)
         return res.status(200).json(response)
     } catch (error) {

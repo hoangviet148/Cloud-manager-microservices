@@ -17,7 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChildCareIcon from '@material-ui/icons/ChildCare';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
-import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
+import PermIdentityIcon from '@material-ui/icons/PermIdentity';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
 import HomeScreen from './screens/HomeScreen';
@@ -130,12 +130,12 @@ export default function SideBar() {
                                 </Typography>
                             </Grid>
                             <Grid item xs={2} style={{ paddingTop: '0.4rem' }}>
-                                <Link to="/cart" ><AddShoppingCartIcon /></Link>
                                 {
-                                    userInfo ? <Link to="/profile" style={{ fontSize: '1rem' }}>Welcome back, {userInfo.name}</Link> :
-                                        <Link to="/signin" ><ExitToAppIcon /></Link>
-                                }
+                                    userInfo ? <Link to="/profile" style={{ fontSize: '1rem' }}>Welcome back, {userInfo.name}</Link> : null
 
+                                }
+                                <Link to="/profile"><PermIdentityIcon/> </Link>
+                                <Link to="/signin" ><ExitToAppIcon /></Link>
                             </Grid>
                         </Grid>
                     </Toolbar>

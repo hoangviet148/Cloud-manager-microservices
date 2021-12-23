@@ -1,5 +1,6 @@
 import {
-    INSTANCE_LIST_REQUEST, INSTANCE_LIST_SUCCESS, INSTANCE_LIST_FAIL
+    INSTANCE_LIST_REQUEST, INSTANCE_LIST_SUCCESS, INSTANCE_LIST_FAIL,
+    CHANGE_INSTANCE_STATUS_REQUEST, CHANGE_INSTANCE_STATUS_SUCCESS, CHANGE_INSTANCE_STATUS_FAIL
 } from "../constants/computeConstants.js";
 
 function instanceListReducer(state = {}, action) {
@@ -17,6 +18,22 @@ function instanceListReducer(state = {}, action) {
     }
 }
 
+function changeInstanceStatusReducer(state = {}, action) {
+    console.log("change Instance Status Reducer")
+    console.log("reducer action:", action)
+    switch (action.type) {
+        case CHANGE_INSTANCE_STATUS_REQUEST:
+            return { message: "request" };
+        case CHANGE_INSTANCE_STATUS_SUCCESS:
+            return { message: action.payload };
+        case CHANGE_INSTANCE_STATUS_FAIL:
+            return { error: action.payload };
+        default:
+            return state;
+    }
+}
+
 export {
-    instanceListReducer
+    instanceListReducer,
+    changeInstanceStatusReducer
 }

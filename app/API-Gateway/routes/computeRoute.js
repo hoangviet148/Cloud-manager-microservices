@@ -15,4 +15,8 @@ router
     .route("/getInstanceByID/:id")
     .get(controller.getInstanceByID);
 
+router
+    .route("/changeInstanceStatus")
+    .post(controller.changeInstanceStatus);
+
 module.exports = router;

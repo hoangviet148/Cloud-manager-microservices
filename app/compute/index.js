@@ -66,10 +66,22 @@ app.addService(computeProto.ComputeService.service, {
         console.log("req: ", req)
         console.log("compute-service - getInstanceByID")
         try {
-            let res = await Compute.find({_id: req.id});
-            let instance = res[0]
+            let instance = await Compute.findOne({ _id: req.id });
             console.log("instance: ", instance)
             callback(null, instance);
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
+        }
+    },
+    changeInstanceStatus: async (call, callback) => {
+        let req = call.request
+        console.log("req: ", req)
+        console.log("compute-service - changeInstanceStatus")
+        try {
+            let instance = await Compute.findOneAndUpdate({ _id: req._id }, { status: req.status });
+            console.log("instance: ", instance)
+            callback(null, { message: "Success!" });
         } catch (error) {
             console.log("error: ", error)
             callback(null, { "message": error + " " });

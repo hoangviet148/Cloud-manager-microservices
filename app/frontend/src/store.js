@@ -2,7 +2,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { tierListReducer } from './reducers/tierReducers';
 import { userRegisterReducer, userSigninReducer } from './reducers/userReducer'
-import { instanceListReducer } from './reducers/computeReducers';
+import { instanceListReducer, changeInstanceStatusReducer } from './reducers/computeReducers';
 
 // import Cookie from 'js-cookie';
 
@@ -14,7 +14,8 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userSignin: userSigninReducer,
     tierList: tierListReducer,
-    instanceList: instanceListReducer
+    instanceList: instanceListReducer,
+    changeInstanceStatus: changeInstanceStatusReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

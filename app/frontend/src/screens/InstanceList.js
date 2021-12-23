@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from '@material-ui/core/Link';
 import { useSelector, useDispatch } from 'react-redux';
-import { listInstances } from '../actions/computeActions';
+import { listInstances, changeInstanceStatus } from '../actions/computeActions';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -16,23 +16,25 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 function InstanceList(props) {
-    const [statusColor, setStatusColor] = useState(true)
     const [status, setStatus] = useState(true)
 
     console.log("InstanceList Screen")
     const instanceList = useSelector(state => state.instanceList);
-    console.log("screen payload: ", instanceList)
+    const changeInstanceStatusMessage = useSelector(state => state.changeInstanceStatus);
+    console.log("screen payload: ", instanceList, changeInstanceStatusMessage)
     const { loading, instances } = instanceList
-
+    const { message: messageChangeStatus, error: errorChangeStatus } = changeInstanceStatusMessage
     const dispatch = useDispatch();
 
     useEffect(() => {
         console.log("useEffect")
         dispatch(listInstances());
-    }, [])
+    }, [messageChangeStatus])
 
-    const powerHandle = () => {
+    const powerHandle = (id, status) => {
         console.log("powerHandle")
+        dispatch(changeInstanceStatus(id, status));
+        //setStatus(!status)
     }
 
     return (
@@ -70,11 +72,11 @@ function InstanceList(props) {
                     <TableBody>
                         {instances?.length && instances?.map(instance => (<TableRow key={instance.hostname}>
                             <TableCell><Link href={`/instance/${instance.id}`}>{instance.hostname}</Link></TableCell>
-                            <TableCell style={{ color: statusColor == true ? "green" : "red" }}>{instance.status}</TableCell>
+                            <TableCell style={{ color: instance.status === "running" ? "green" : "red" }}>{instance.status}</TableCell>
                             <TableCell>{instance.cpu}</TableCell>
                             <TableCell>{instance.ram}</TableCell>
                             <TableCell>
-                                <PowerSettingsNewIcon onClick={powerHandle} />
+                                <PowerSettingsNewIcon onClick={() => powerHandle(instance._id, instance.status === "running" ? "stopped" : "running")} />
                                 <PlayArrowIcon />
                                 <DeleteIcon />
                                 <SettingsNewIcon />
