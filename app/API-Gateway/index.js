@@ -11,7 +11,8 @@ const serviceName = 'API Gateway'
 
 const authRoute = require("./routes/authRoute");
 const networkRoute = require("./routes/networkRoute");
-// const productRoute = require("./routes/productRoute");
+const computeRoute = require("./routes/computeRoute");
+//const storageRoute = require("./routes/storageRoute");
 
 // Middleware
 app.use(
@@ -25,6 +26,8 @@ app.use(cors());
 // Router
 app.use("/api/auth", authRoute);
 app.use("/api/network", networkRoute);
+app.use("/api/compute", computeRoute);
+//app.use("/api/storage", storageRoute);
 
 let emitter = new events.EventEmitter();
 emitter.setMaxListeners(0)

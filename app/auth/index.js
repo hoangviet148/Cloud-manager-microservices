@@ -117,6 +117,7 @@ app.addService(authProto.AuthService.service, {
     },
     getListTiers: async (call, callback) => {
         console.log("auth-service - getListTiers")
+        console.log("req:" + call)
         try {
             let tiers = await Tier.find();
             callback(null, { tiers: tiers });

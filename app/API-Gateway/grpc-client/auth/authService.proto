@@ -17,9 +17,8 @@ message Tier {
     string id = 1;
     string name = 2;
     string cost = 3;
-    int32 maxIOPerSec = 4;
-    bool analytics = 5;
-    repeated string users = 6;
+    bool analytics = 4;
+    repeated string users = 5;
 }
 
 message Tiers {

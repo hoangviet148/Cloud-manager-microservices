@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -22,21 +21,13 @@ import AddShoppingCartIcon from '@material-ui/icons/AddShoppingCart';
 import { BrowserRouter, Route, Link } from 'react-router-dom';
 import './App.css';
 import HomeScreen from './screens/HomeScreen';
-//import ProductScreen from './screens/ProductScreen';
-import { Button, Grid } from '@material-ui/core';
-//import CartScreen from './screens/CartScreen';
+import { Grid } from '@material-ui/core';
+import InstanceList from './screens/InstanceList';
+import InstanceDetail from './screens/InstanceDetail';
 import SigninScreen from './screens/SigninScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import TierList from './screens/TierList';
-//import ProductList from './screens/ProductList';
-//import ShippingScreen from './screens/ShippingScreen';
-//import PaymentScreen from './screens/PaymentScreen';
-//import PlaceOrderScreen from './screens/PlaceOrderScreen';
-//import ProfileScreen from './screens/ProfileScreen';
-//import OrdersScreen from './screens/OrdersScreen';
-//import ProductCreateForm from './screens/ProductCreateForm';
-//import ProductUpdateForm from './screens/ProductUpdateForm';
-//import UserList from './screens/UsersScreen';
+import TierCreateForm from './screens/TierCreateForm';
 
 const drawerWidth = 240;
 
@@ -166,13 +157,13 @@ export default function SideBar() {
                     <Divider />
                     <List>
                         <ListItem button>
-                            <Link to="/compute" style={{ textDecoration: 'none', color: '#203040' }}>
+                            <Link to="/instances" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
                                         <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <ListItemText style={{ paddingLeft: '0.5rem' }}>Compute</ListItemText>
+                                        <ListItemText style={{ paddingLeft: '0.5rem' }}>Instances</ListItemText>
                                     </Grid>
                                 </Grid>
                             </Link>
@@ -184,7 +175,7 @@ export default function SideBar() {
                                         <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <ListItemText style={{ paddingLeft: '0.5rem' }}>Network</ListItemText>
+                                        <ListItemText style={{ paddingLeft: '0.5rem' }}>Networks</ListItemText>
                                     </Grid>
                                 </Grid>
                             </Link>
@@ -208,25 +199,35 @@ export default function SideBar() {
                                         <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
                                     </Grid>
                                     <Grid item xs={6}>
-                                        <ListItemText style={{ paddingLeft: '0.2rem' }}>Resource</ListItemText>
+                                        <ListItemText style={{ paddingLeft: '0.2rem' }}>Storages</ListItemText>
                                     </Grid>
                                 </Grid>
                             </Link>
                         </ListItem>
-
-
+                        <ListItem button>
+                            <Link to="/overview" style={{ textDecoration: 'none', color: '#203040' }}>
+                                <Grid container>
+                                    <Grid item xs={6}>
+                                        <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
+                                    </Grid>
+                                    <Grid item xs={6}>
+                                        <ListItemText style={{ paddingLeft: '0.2rem' }}>Overview</ListItemText>
+                                    </Grid>
+                                </Grid>
+                            </Link>
+                        </ListItem>
                     </List>
                 </Drawer>
                 <main className={clsx(classes.content, { [classes.contentShift]: open, })}>
                     <div className={classes.drawerHeader} />
                     <div className="content" style={{ minHeight: '37rem' }}>
-                        {/* <Route path="/product/:id" component={ProductScreen} /> */}
-                        {/* <Route path="/cart/:id?" component={CartScreen} /> */}
+                        <Route path="/instances" component={InstanceList} />
+                        <Route path="/instance/:id" component={InstanceDetail} />
                         <Route path="/" exact={true} component={HomeScreen} />
                         <Route path="/signin" component={SigninScreen} />
                         <Route path="/register" component={RegisterScreen} />
                         <Route path="/tier" component={TierList} />
-                        {/* <Route path="/product-create" component={ProductCreateForm} /> */}
+                        <Route path="/tier-create" component={TierCreateForm} />
                         {/* <Route path="/product-update/:id" component={ProductUpdateForm} /> */}
                         {/* <Route path="/products-list" component={ProductList} /> */}
                         {/* <Route path="/shipping" component={ShippingScreen} /> */}

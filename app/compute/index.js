@@ -26,19 +26,20 @@ mongoose.connect(
 );
 
 app.addService(computeProto.ComputeService.service, {
-    createCompute: async (call, callback) => {
+    createInstance: async (call, callback) => {
         let req = call.request
-        console.log("req:" + req)
+        console.log("req:" + req.networkID)
         try {
             let newCompute = new Compute({
+                "_id": new mongoose.Types.ObjectId(),
                 "hostname": req.hostname,
                 "ownerID": req.ownerID,
                 "networkID": req.networkID,
-                "state": "active",
-                "IPv4": req.IPv4,
+                "status": "running",
                 "disk": req.disk,
-                "ram": req.ram,
                 "cpu": req.cpu,
+                "ram": req.ram,
+                "IPv4": req.IPv4
             })
 
             await newCompute.save();
@@ -46,6 +47,32 @@ app.addService(computeProto.ComputeService.service, {
         } catch (error) {
             console.log("error: ", error)
             callback(null, { message: error });
+        }
+    },
+    getListInstances: async (call, callback) => {
+        console.log("compute-service - getListInstances")
+        console.log("req: ", call)
+        try {
+            let instances = await Compute.find();
+            console.log("instances: ", instances)
+            callback(null, { instances: instances });
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
+        }
+    },
+    getInstanceByID: async (call, callback) => {
+        let req = call.request
+        console.log("req: ", req)
+        console.log("compute-service - getInstanceByID")
+        try {
+            let res = await Compute.find({_id: req.id});
+            let instance = res[0]
+            console.log("instance: ", instance)
+            callback(null, instance);
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
         }
     }
 })

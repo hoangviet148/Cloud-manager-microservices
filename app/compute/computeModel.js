@@ -11,20 +11,20 @@ const computeSchema = new Schema({
     networkID: {
         type: String
     },
-    state: {
+    status: {
         type: String
     },
     IPv4: {
         type: String
     },
     disk: {
-        type: Number
+        type: String
     },
     ram: {
-        type: Number
+        type: String
     },
     cpu: {
-        type: Number
+        type: String
     }
 });
 

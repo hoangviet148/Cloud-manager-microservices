@@ -1,17 +1,33 @@
 syntax = "proto3";
 
+message Empty {}
+
 message Compute {
-    string id = 1;
-    string name = 2;
+    string _id = 1;
+    string hostname = 2;
     string ownerID = 3;
-    string state = 4;
-    string IPv4 = 5;
+    string networkID = 4;
+    string status = 5;
+    string disk = 6;
+    string cpu = 7;
+    string ram = 8;
+    string IPv4 = 9;
+}
+
+message Computes {
+    repeated Compute instances = 1;
 }
 
 message Message {
     string message = 1;
 }
 
+message InstanceID {
+    string id = 1;
+}
+
 service ComputeService {
-    rpc createCompute(Compute) returns (Message) {}
+    rpc createInstance(Compute) returns (Message) {}
+    rpc getListInstances(Empty) returns (Computes) {}
+    rpc getInstanceByID(InstanceID) returns (Compute) {}
 }
