@@ -52,9 +52,9 @@ function App() {
 
         </main>
 
-        <footer className="footer">
+        {/* <footer className="footer">
           All right reversed.
-      </footer>
+      </footer> */}
 
       </div>
     </BrowserRouter>

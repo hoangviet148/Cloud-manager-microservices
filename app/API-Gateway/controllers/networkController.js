@@ -17,3 +17,15 @@ module.exports.createNetwork = async (req, res) => {
         return res.status(400).json({ message: error + " " })
     }
 }
+
+module.exports.getAllNetworks = async (req, res) => {
+    console.log("api gateway - getAllNetworks controller")
+    try {
+        let response = await networkClient.getAllNetworks();
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}

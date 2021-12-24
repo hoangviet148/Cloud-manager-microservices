@@ -15,8 +15,8 @@ import SettingsNewIcon from '@material-ui/icons/Settings';
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload';
 import DeleteIcon from '@material-ui/icons/Delete';
 import Graphics from './instanceDetailPage/Graphics'
-import Link from '@material-ui/core/Link';
 import { makeStyles } from '@material-ui/core/styles';
+import { getInstanceByID } from '../actions/computeActions';
 
 const useStyles = makeStyles({
     indicator: {
@@ -33,28 +33,21 @@ function InstanceDetail(props) {
     const classes = useStyles();
     console.log("InstanceDetail Screen")
     const [value, setValue] = useState(3);
-    // const instanceList = useSelector(state => state.instanceList);
-    // console.log("screen payload: ", instanceList)
-    // const { loading, instances } = instanceList
+    const res = useSelector(state => state.InstanceByID);
+    console.log("screen payload: ", res.instance)
+    const instance = res.instance
 
     const dispatch = useDispatch();
 
     useEffect(() => {
         console.log("useEffect")
-        //dispatch(listInstances());
+        console.log("props: ", props)
+        dispatch(getInstanceByID(props.match.params.id));
     }, [])
 
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
-    const instance =
-    {
-        hostname: "cdn",
-        status: "running",
-        cpu: 1,
-        ram: 1024,
-    }
 
     return (
         <div className="row">
@@ -70,11 +63,11 @@ function InstanceDetail(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        <TableRow key={instance.hostname}>
-                            <TableCell>{instance.hostname}</TableCell>
-                            <TableCell style={{ color: instance.status === "running" ? "green" : "red" }}>{instance.status}</TableCell>
-                            <TableCell>{instance.cpu}</TableCell>
-                            <TableCell>{instance.ram}</TableCell>
+                        <TableRow key={instance?.hostname}>
+                            <TableCell>{instance?.hostname}</TableCell>
+                            <TableCell style={{ color: instance?.status === "running" ? "green" : "red" }}>{instance?.status}</TableCell>
+                            <TableCell>{instance?.cpu}</TableCell>
+                            <TableCell>{instance?.ram}</TableCell>
                             <TableCell>None</TableCell>
                         </TableRow>
                     </TableBody>
@@ -82,7 +75,7 @@ function InstanceDetail(props) {
             </div>
             <br></br>
             <div>
-                <Tabs className={classes.tabs} centered="true" value={value} onChange={handleChange} aria-label="icon label tabs example">
+                <Tabs centered="true" value={value} onChange={handleChange} aria-label="icon label tabs example">
                     <Tab icon={<PowerSettingsNewIcon />} label="Power" />
                     <Tab icon={<BusinessCenterIcon />} label="Access" />
                     <Tab icon={<CameraAltIcon />} label="Snapshots" />

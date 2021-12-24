@@ -1,6 +1,8 @@
 import {
     INSTANCE_LIST_REQUEST, INSTANCE_LIST_SUCCESS, INSTANCE_LIST_FAIL,
-    CHANGE_INSTANCE_STATUS_REQUEST, CHANGE_INSTANCE_STATUS_SUCCESS, CHANGE_INSTANCE_STATUS_FAIL
+    CHANGE_INSTANCE_STATUS_REQUEST, CHANGE_INSTANCE_STATUS_SUCCESS, CHANGE_INSTANCE_STATUS_FAIL,
+    GET_INSTANCE_BY_ID_REQUEST, GET_INSTANCE_BY_ID_SUCCESS, GET_INSTANCE_BY_ID_FAIL,
+    CREATE_NEW_INSTANCE_REQUEST, CREATE_NEW_INSTANCE_SUCCESS, CREATE_NEW_INSTANCE_FAIL
 } from "../constants/computeConstants.js";
 
 function instanceListReducer(state = {}, action) {
@@ -33,7 +35,39 @@ function changeInstanceStatusReducer(state = {}, action) {
     }
 }
 
+function getInstanceByIDReducer(state = {}, action) {
+    console.log("get Instance By ID Reducer")
+    console.log("reducer action:", action)
+    switch (action.type) {
+        case CREATE_NEW_INSTANCE_REQUEST:
+            return { message: "request" };
+        case CREATE_NEW_INSTANCE_SUCCESS:
+            return { instance: action.payload };
+        case CREATE_NEW_INSTANCE_FAIL:
+            return { error: action.payload };
+        default:
+            return state;
+    }
+}
+
+function createInstance(state = {}, action) {
+    console.log("create Instance Reducer")
+    console.log("reducer action:", action)
+    switch (action.type) {
+        case GET_INSTANCE_BY_ID_REQUEST:
+            return { message: "request" };
+        case GET_INSTANCE_BY_ID_SUCCESS:
+            return { instance: action.payload };
+        case GET_INSTANCE_BY_ID_FAIL:
+            return { error: action.payload };
+        default:
+            return state;
+    }
+}
+
 export {
     instanceListReducer,
-    changeInstanceStatusReducer
+    changeInstanceStatusReducer,
+    getInstanceByIDReducer,
+    createInstance
 }

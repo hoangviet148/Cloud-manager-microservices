@@ -2,7 +2,14 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { tierListReducer } from './reducers/tierReducers';
 import { userRegisterReducer, userSigninReducer } from './reducers/userReducer'
-import { instanceListReducer, changeInstanceStatusReducer } from './reducers/computeReducers';
+import {
+    instanceListReducer,
+    changeInstanceStatusReducer,
+    getInstanceByIDReducer
+} from './reducers/computeReducers';
+import {
+    getAllNetworksReducer
+} from './reducers/networkReducers';
 
 // import Cookie from 'js-cookie';
 
@@ -15,7 +22,9 @@ const reducer = combineReducers({
     userSignin: userSigninReducer,
     tierList: tierListReducer,
     instanceList: instanceListReducer,
-    changeInstanceStatus: changeInstanceStatusReducer
+    changeInstanceStatus: changeInstanceStatusReducer,
+    InstanceByID: getInstanceByIDReducer,
+    AllNetworks: getAllNetworksReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

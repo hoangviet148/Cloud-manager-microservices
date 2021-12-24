@@ -49,6 +49,18 @@ app.addService(networkProto.NetworkService.service, {
             console.log("error: ", error)
             callback(null, { message: error  });
         }
+    },
+    getAllNetworks: async (call, callback) => {
+        console.log("req:" + call.request)
+        try {
+            const networks = await Network.find();
+            console.log("networks:" + networks)
+    
+            callback(null, { networks: networks });
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { message: error  });
+        }
     }
 })
 

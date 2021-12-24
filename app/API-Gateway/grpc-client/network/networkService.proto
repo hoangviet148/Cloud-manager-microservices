@@ -1,5 +1,7 @@
 syntax = "proto3";
 
+message Empty {}
+
 message Network {
     string id = 1;
     string name = 2;
@@ -8,10 +10,15 @@ message Network {
     string IPv4 = 5;
 }
 
+message Networks {
+    repeated Network networks = 1;
+}
+
 message Message {
     string message = 1;
 }
 
 service NetworkService {
     rpc createNetwork(Network) returns (Message) {}
+    rpc getAllNetworks(Empty) returns (Networks) {}
 }

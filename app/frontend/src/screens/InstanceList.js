@@ -16,8 +16,6 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 
 function InstanceList(props) {
-    const [status, setStatus] = useState(true)
-
     console.log("InstanceList Screen")
     const instanceList = useSelector(state => state.instanceList);
     const changeInstanceStatusMessage = useSelector(state => state.changeInstanceStatus);
@@ -34,7 +32,6 @@ function InstanceList(props) {
     const powerHandle = (id, status) => {
         console.log("powerHandle")
         dispatch(changeInstanceStatus(id, status));
-        //setStatus(!status)
     }
 
     return (
@@ -48,7 +45,7 @@ function InstanceList(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs={4} style={{ paddingLeft: '12rem' }}>
-                        <Link href="../tier-create" >
+                        <Link href="../instance-create" >
                             <Grid container>
                                 <Button variant="contained" color="primary">
                                     New Instance
@@ -71,7 +68,7 @@ function InstanceList(props) {
                     </TableHead>
                     <TableBody>
                         {instances?.length && instances?.map(instance => (<TableRow key={instance.hostname}>
-                            <TableCell><Link href={`/instance/${instance.id}`}>{instance.hostname}</Link></TableCell>
+                            <TableCell><Link href={`/instance/${instance._id}`}>{instance.hostname}</Link></TableCell>
                             <TableCell style={{ color: instance.status === "running" ? "green" : "red" }}>{instance.status}</TableCell>
                             <TableCell>{instance.cpu}</TableCell>
                             <TableCell>{instance.ram}</TableCell>

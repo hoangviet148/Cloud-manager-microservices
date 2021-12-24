@@ -7,4 +7,7 @@ router
     .route("/createNetwork")
     .post(controller.createNetwork);
 
+router
+    .route("/getAllNetworks")
+    .get(controller.getAllNetworks);
 module.exports = router;

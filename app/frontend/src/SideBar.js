@@ -28,7 +28,7 @@ import SigninScreen from './screens/SigninScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import TierList from './screens/TierList';
 import TierCreateForm from './screens/TierCreateForm';
-
+import InstanceCreate from './screens/InstanceCreate';
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -228,6 +228,7 @@ export default function SideBar() {
                         <Route path="/register" component={RegisterScreen} />
                         <Route path="/tier" component={TierList} />
                         <Route path="/tier-create" component={TierCreateForm} />
+                        <Route path="/instance-create" component={InstanceCreate} />
                         {/* <Route path="/product-update/:id" component={ProductUpdateForm} /> */}
                         {/* <Route path="/products-list" component={ProductList} /> */}
                         {/* <Route path="/shipping" component={ShippingScreen} /> */}
@@ -240,9 +241,9 @@ export default function SideBar() {
                     </div>
                 </main>
             </div>
-            <footer className="footer">
+            {/* <footer className="footer">
                 All right reversed.
-    </footer>
+    </footer> */}
         </BrowserRouter>
     )
 }
