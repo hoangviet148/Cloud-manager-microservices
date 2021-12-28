@@ -19,4 +19,8 @@ router
     .route("/changeInstanceStatus")
     .post(controller.changeInstanceStatus);
 
+router
+    .route("/deleteInstance/:id")
+    .post(controller.deleteInstance);
+
 module.exports = router;

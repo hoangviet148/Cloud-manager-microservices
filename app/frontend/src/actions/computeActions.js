@@ -4,7 +4,8 @@ import {
     INSTANCE_LIST_REQUEST, INSTANCE_LIST_SUCCESS, INSTANCE_LIST_FAIL,
     CHANGE_INSTANCE_STATUS_REQUEST, CHANGE_INSTANCE_STATUS_SUCCESS, CHANGE_INSTANCE_STATUS_FAIL,
     GET_INSTANCE_BY_ID_REQUEST, GET_INSTANCE_BY_ID_SUCCESS, GET_INSTANCE_BY_ID_FAIL,
-    CREATE_NEW_INSTANCE_REQUEST, CREATE_NEW_INSTANCE_SUCCESS, CREATE_NEW_INSTANCE_FAIL
+    CREATE_NEW_INSTANCE_REQUEST, CREATE_NEW_INSTANCE_SUCCESS, CREATE_NEW_INSTANCE_FAIL,
+    DELETE_INSTANCE_REQUEST, DELETE_INSTANCE_SUCCESS, DELETE_INSTANCE_FAIL
 } from "../constants/computeConstants.js";
 
 const listInstances = () => async (dispatch) => {
@@ -46,7 +47,7 @@ const getInstanceByID = (id) => async (dispatch) => {
     }
 }
 
-const createInstance = (hostname, ownerID, networkID, disk, cpu, ram) => async (dispatch) => {
+const createInstance = (hostname, ownerID, cpu, ram, disk, networkID) => async (dispatch) => {
     console.log("create Instance action: ")
     dispatch({ type: CREATE_NEW_INSTANCE_REQUEST, payload: {} });
     try {
@@ -65,9 +66,22 @@ const createInstance = (hostname, ownerID, networkID, disk, cpu, ram) => async (
     }
 }
 
+const deleteInstance = (id) => async (dispatch) => {
+    console.log("deleteInstance action: ", id)
+    dispatch({ type: DELETE_INSTANCE_REQUEST, payload: {} });
+    try {
+        const { data } = await axios.post(`http://localhost:8080/api/compute/deleteInstance/${id}`);
+        console.log("action payload: ", data)
+        dispatch({ type: DELETE_INSTANCE_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({ type: DELETE_INSTANCE_FAIL, payload: error.message });
+    }
+}
+
 export { 
     listInstances, 
     changeInstanceStatus, 
     getInstanceByID,
-    createInstance
+    createInstance,
+    deleteInstance
 };

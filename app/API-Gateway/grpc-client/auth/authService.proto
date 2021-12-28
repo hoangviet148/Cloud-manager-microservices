@@ -13,6 +13,10 @@ message User {
     string tier = 8;
 }
 
+message Users {
+    repeated User users = 1;
+}
+
 message Tier {
     string id = 1;
     string name = 2;
@@ -39,4 +43,5 @@ service AuthService {
     rpc login(LoginRequest) returns (Message) {}
     rpc createTier(Tier) returns (Message) {}
     rpc getListTiers(Empty) returns (Tiers) {}
+    rpc getUserByTier(Message) returns (Users) {}
 }

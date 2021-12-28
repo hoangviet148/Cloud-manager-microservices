@@ -27,6 +27,7 @@ import InstanceDetail from './screens/InstanceDetail';
 import SigninScreen from './screens/SigninScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import TierList from './screens/TierList';
+import TierDetail from './screens/TierDetail';
 import TierCreateForm from './screens/TierCreateForm';
 import InstanceCreate from './screens/InstanceCreate';
 const drawerWidth = 240;
@@ -181,7 +182,7 @@ export default function SideBar() {
                             </Link>
                         </ListItem>
                         <ListItem button>
-                            <Link to="/tier" style={{ textDecoration: 'none', color: '#203040' }}>
+                            <Link to="/tiers" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
                                         <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
@@ -226,7 +227,8 @@ export default function SideBar() {
                         <Route path="/" exact={true} component={HomeScreen} />
                         <Route path="/signin" component={SigninScreen} />
                         <Route path="/register" component={RegisterScreen} />
-                        <Route path="/tier" component={TierList} />
+                        <Route path="/tiers" component={TierList} />
+                        <Route path="/tier/:id" component={TierDetail} />
                         <Route path="/tier-create" component={TierCreateForm} />
                         <Route path="/instance-create" component={InstanceCreate} />
                         {/* <Route path="/product-update/:id" component={ProductUpdateForm} /> */}

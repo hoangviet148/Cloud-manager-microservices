@@ -19,4 +19,7 @@ router
     .route("/getListTiers")
     .get(controller.getListTiers);
 
+router
+    .route("/getUserByTier/:tier")
+    .get(controller.getUserByTier);
 module.exports = router;

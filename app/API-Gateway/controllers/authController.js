@@ -74,3 +74,17 @@ module.exports.getListTiers = async (req, res) => {
         return res.status(400).json({ message: error + " " })
     }
 }
+
+module.exports.getUserByTier = async (req, res) => {
+    console.log("api gateway - getUserByTier controller")
+    const tier = req.params.tier
+    console.log("tier: ", tier)
+    try {
+        let response = await authClient.getUserByTier({message: tier});
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}

@@ -36,4 +36,5 @@ service ComputeService {
     rpc getListInstances(Empty) returns (Computes) {}
     rpc getInstanceByID(InstanceID) returns (Compute) {}
     rpc changeInstanceStatus(StatusMessage) returns (Message) {}
+    rpc deleteInstance(InstanceID) returns (Message) {}
 }

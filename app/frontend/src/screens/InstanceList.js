@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Link from '@material-ui/core/Link';
 import { useSelector, useDispatch } from 'react-redux';
-import { listInstances, changeInstanceStatus } from '../actions/computeActions';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,12 +13,15 @@ import SettingsNewIcon from '@material-ui/icons/Settings';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import { listInstances, changeInstanceStatus, deleteInstance } from '../actions/computeActions';
 
 function InstanceList(props) {
     console.log("InstanceList Screen")
     const instanceList = useSelector(state => state.instanceList);
     const changeInstanceStatusMessage = useSelector(state => state.changeInstanceStatus);
-    console.log("screen payload: ", instanceList, changeInstanceStatusMessage)
+    const deleteInstanceMessage = useSelector(state => state.deleteInstance)
+    console.log("screen payload: ", instanceList, changeInstanceStatusMessage, deleteInstanceMessage)
     const { loading, instances } = instanceList
     const { message: messageChangeStatus, error: errorChangeStatus } = changeInstanceStatusMessage
     const dispatch = useDispatch();
@@ -27,11 +29,16 @@ function InstanceList(props) {
     useEffect(() => {
         console.log("useEffect")
         dispatch(listInstances());
-    }, [messageChangeStatus])
+    }, [messageChangeStatus, deleteInstanceMessage.message])
 
     const powerHandle = (id, status) => {
         console.log("powerHandle")
         dispatch(changeInstanceStatus(id, status));
+    }
+
+    const deleteHandle = (id) => {
+        console.log("powerHandle")
+        dispatch(deleteInstance(id));
     }
 
     return (
@@ -73,10 +80,16 @@ function InstanceList(props) {
                             <TableCell>{instance.cpu}</TableCell>
                             <TableCell>{instance.ram}</TableCell>
                             <TableCell>
-                                <PowerSettingsNewIcon onClick={() => powerHandle(instance._id, instance.status === "running" ? "stopped" : "running")} />
-                                <PlayArrowIcon />
-                                <DeleteIcon />
-                                <SettingsNewIcon />
+                                <IconButton>
+                                    <PowerSettingsNewIcon onClick={() => powerHandle(instance._id, instance.status === "running" ? "stopped" : "running")} />
+                                </IconButton>
+                                {/* <PlayArrowIcon /> */}
+                                <IconButton>
+                                    <DeleteIcon onClick={() => deleteHandle(instance._id)} />
+                                </IconButton>
+                                <IconButton>
+                                    <SettingsNewIcon />
+                                </IconButton>
                             </TableCell>
                         </TableRow>))}
                     </TableBody>

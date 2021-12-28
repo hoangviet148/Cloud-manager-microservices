@@ -63,3 +63,17 @@ module.exports.changeInstanceStatus = async (req, res) => {
         return res.status(400).json({ message: error + " " })
     }
 }
+
+module.exports.deleteInstance = async (req, res) => {
+    console.log("api gateway - deleteInstance controller")
+    try {
+        let id = req.params.id;
+        console.log("InstanceID:", id)
+        let response = await computeClient.deleteInstance({ id: id });
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}

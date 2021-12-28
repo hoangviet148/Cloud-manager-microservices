@@ -15,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { getAllNetworks } from '../actions/networkActions';
 import { createInstance } from '../actions/computeActions';
+
 const useStyles = makeStyles((theme) => ({
     paper: {
         marginTop: theme.spacing(4),
@@ -40,6 +41,7 @@ function InstanceCreate(props) {
     const [name, setName] = useState('');
     const [CPU, setCPU] = useState('1');
     const [ram, setRam] = useState('1024');
+    const [disk, setDisk] = useState('');
     const [network, setNetwork] = useState('');
     const dispatch = useDispatch();
 
@@ -57,9 +59,9 @@ function InstanceCreate(props) {
         dispatch(getAllNetworks());
     }, [])
 
-    const submitHandler = (e) => {
+    const submitHandler = async (e) => {
         e.preventDefault();
-        dispatch(createInstance(name, "ownerID", network, "disk", CPU, ram))
+        await dispatch(createInstance(name, "ownerID", CPU, ram, disk, network))
         props.history.push("/instances");
     }
 
@@ -80,7 +82,7 @@ function InstanceCreate(props) {
                         Create Instance
           </Typography>
                     <form className={classes.form} onSubmit={submitHandler}>
-                        <Grid item xs={12}>
+                        <Grid item xs={8}>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -93,7 +95,7 @@ function InstanceCreate(props) {
                                 onChange={(e) => setName(e.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={8}>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -109,7 +111,7 @@ function InstanceCreate(props) {
                                 onChange={(e) => setCPU(e.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={8}>
                             <TextField
                                 variant="outlined"
                                 margin="normal"
@@ -125,7 +127,23 @@ function InstanceCreate(props) {
                                 onChange={(e) => setRam(e.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={6}>
+                        <Grid item xs={8}>
+                            <TextField
+                                variant="outlined"
+                                margin="normal"
+                                required
+                                fullWidth
+                                label="Disk"
+                                name="disk"
+                                id="disk"
+                                type="number"
+                                min="1"
+                                autoComplete="disk"
+                                autoFocus
+                                onChange={(e) => setDisk(e.target.value)}
+                            />
+                        </Grid>
+                        <Grid item xs={8}>
                             <FormControl variant="outlined" style={{ width: '100%', marginTop: '2rem' }} margin="normal">
                                 <InputLabel id="network">Network</InputLabel>
                                 <Select
@@ -145,7 +163,7 @@ function InstanceCreate(props) {
                             className={classes.submit}
                         >
                             Create
-              </Button>
+                        </Button>
 
                     </form>
                 </div>

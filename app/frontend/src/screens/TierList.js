@@ -7,12 +7,11 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import DeleteIcon from '@material-ui/icons/Delete';
 import CreateIcon from '@material-ui/icons/Create';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
-import AddBoxIcon from '@material-ui/icons/AddBox';
+import Button from '@material-ui/core/Button';
 
 function TierList(props) {
     console.log("TierList Screen")
@@ -36,26 +35,19 @@ function TierList(props) {
     return (
 
         <div className="content content-margined">
-            <div className="back-to-result">
-                <Link href="../profile" style={{ cursor: 'pointer', textDecoration: 'none' }}>
-                    <Grid container style={{ width: '15rem' }}>
-                        <Grid item xs={2}><ArrowBackIcon /></Grid>
-                        <Grid item xs={10}>Back to profile</Grid>
-                    </Grid>
-                </Link>
-            </div>
             <div className="product-header">
                 <Grid container>
                     <Grid item xs={8}>
                         <Typography component="h1" variant="h5">
                             Tier list
-          </Typography>
+                        </Typography>
                     </Grid>
                     <Grid item xs={4} style={{ paddingLeft: '12rem' }}>
-                        <Link href="../tier-create" style={{ color: '#203040', textDecoration: 'none' }}>
+                        <Link href="../instance-create" >
                             <Grid container>
-                                <Grid item xs={1}><AddBoxIcon /></Grid>
-                                <Grid item xs={4} style={{ paddingTop: '.1rem', fontSize: '1rem' }}>Add tier</Grid>
+                                <Button variant="contained" color="primary">
+                                    New Tier
+                                </Button>
                             </Grid>
                         </Link>
                     </Grid>

@@ -2,7 +2,8 @@ import {
     INSTANCE_LIST_REQUEST, INSTANCE_LIST_SUCCESS, INSTANCE_LIST_FAIL,
     CHANGE_INSTANCE_STATUS_REQUEST, CHANGE_INSTANCE_STATUS_SUCCESS, CHANGE_INSTANCE_STATUS_FAIL,
     GET_INSTANCE_BY_ID_REQUEST, GET_INSTANCE_BY_ID_SUCCESS, GET_INSTANCE_BY_ID_FAIL,
-    CREATE_NEW_INSTANCE_REQUEST, CREATE_NEW_INSTANCE_SUCCESS, CREATE_NEW_INSTANCE_FAIL
+    CREATE_NEW_INSTANCE_REQUEST, CREATE_NEW_INSTANCE_SUCCESS, CREATE_NEW_INSTANCE_FAIL,
+    DELETE_INSTANCE_REQUEST, DELETE_INSTANCE_SUCCESS, DELETE_INSTANCE_FAIL
 } from "../constants/computeConstants.js";
 
 function instanceListReducer(state = {}, action) {
@@ -35,14 +36,14 @@ function changeInstanceStatusReducer(state = {}, action) {
     }
 }
 
-function getInstanceByIDReducer(state = {}, action) {
-    console.log("get Instance By ID Reducer")
+function createInstance(state = {}, action) {
+    console.log("createInstance Reducer")
     console.log("reducer action:", action)
     switch (action.type) {
         case CREATE_NEW_INSTANCE_REQUEST:
             return { message: "request" };
         case CREATE_NEW_INSTANCE_SUCCESS:
-            return { instance: action.payload };
+            return { message: action.payload };
         case CREATE_NEW_INSTANCE_FAIL:
             return { error: action.payload };
         default:
@@ -50,8 +51,8 @@ function getInstanceByIDReducer(state = {}, action) {
     }
 }
 
-function createInstance(state = {}, action) {
-    console.log("create Instance Reducer")
+function getInstanceByIDReducer(state = {}, action) {
+    console.log("getInstanceByIDReducer Reducer")
     console.log("reducer action:", action)
     switch (action.type) {
         case GET_INSTANCE_BY_ID_REQUEST:
@@ -65,9 +66,25 @@ function createInstance(state = {}, action) {
     }
 }
 
+function deleteInstanceReducer(state = {}, action) {
+    console.log("delete Instance Reducer Reducer")
+    console.log("reducer action:", action)
+    switch (action.type) {
+        case DELETE_INSTANCE_REQUEST:
+            return { message: "request" };
+        case DELETE_INSTANCE_SUCCESS:
+            return action.payload ;
+        case DELETE_INSTANCE_FAIL:
+            return { error: action.payload };
+        default:
+            return state;
+    }
+}
+
 export {
     instanceListReducer,
     changeInstanceStatusReducer,
     getInstanceByIDReducer,
-    createInstance
+    createInstance,
+    deleteInstanceReducer
 }

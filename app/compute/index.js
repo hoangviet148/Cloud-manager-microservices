@@ -39,7 +39,7 @@ app.addService(computeProto.ComputeService.service, {
                 "disk": req.disk,
                 "cpu": req.cpu,
                 "ram": req.ram,
-                "IPv4": req.IPv4
+                "IPv4": "IP"
             })
 
             await newCompute.save();
@@ -82,6 +82,22 @@ app.addService(computeProto.ComputeService.service, {
             let instance = await Compute.findOneAndUpdate({ _id: req._id }, { status: req.status });
             console.log("instance: ", instance)
             callback(null, { message: "Success!" });
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
+        }
+    },
+    deleteInstance: async (call, callback) => {
+        let req = call.request
+        console.log("req: ", req)
+        console.log("compute-service - deleteInstance")
+        try {
+            let res = await Compute.deleteOne({ _id: req.id });
+            if (res.deletedCount == 0) {
+                throw "Instance not exist"
+            }
+            console.log("res: ", res)
+            callback(null, { message: res.ok });
         } catch (error) {
             console.log("error: ", error)
             callback(null, { "message": error + " " });

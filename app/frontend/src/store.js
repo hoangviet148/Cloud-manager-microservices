@@ -5,7 +5,8 @@ import { userRegisterReducer, userSigninReducer } from './reducers/userReducer'
 import {
     instanceListReducer,
     changeInstanceStatusReducer,
-    getInstanceByIDReducer
+    getInstanceByIDReducer,
+    deleteInstanceReducer
 } from './reducers/computeReducers';
 import {
     getAllNetworksReducer
@@ -24,7 +25,8 @@ const reducer = combineReducers({
     instanceList: instanceListReducer,
     changeInstanceStatus: changeInstanceStatusReducer,
     InstanceByID: getInstanceByIDReducer,
-    AllNetworks: getAllNetworksReducer
+    AllNetworks: getAllNetworksReducer,
+    deleteInstance: deleteInstanceReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
