@@ -1,7 +1,14 @@
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
+import Cookie from 'js-cookie';
 import thunk from 'redux-thunk';
 import { tierListReducer } from './reducers/tierReducers';
-import { userRegisterReducer, userSigninReducer } from './reducers/userReducer'
+import {
+    userRegisterReducer,
+    userSigninReducer,
+    getUsersByTierReducer,
+    changeUserStatusReducer,
+    deleteUserByIDReducer
+} from './reducers/userReducer'
 import {
     instanceListReducer,
     changeInstanceStatusReducer,
@@ -12,12 +19,11 @@ import {
     getAllNetworksReducer
 } from './reducers/networkReducers';
 
-// import Cookie from 'js-cookie';
 
-// const cartItems = Cookie.getJSON('cartItems') || [];
-//const userInfo = Cookie.getJSON('userInfo') || null;
+const userInfo = Cookie.getJSON('userInfo') || null;
 
-const initialState = {};
+const initialState = { userSignin: { userInfo } };
+
 const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userSignin: userSigninReducer,
@@ -26,7 +32,10 @@ const reducer = combineReducers({
     changeInstanceStatus: changeInstanceStatusReducer,
     InstanceByID: getInstanceByIDReducer,
     AllNetworks: getAllNetworksReducer,
-    deleteInstance: deleteInstanceReducer
+    deleteInstance: deleteInstanceReducer,
+    getUsersByTier: getUsersByTierReducer,
+    changeUserStatus: changeUserStatusReducer,
+    deleteUserByID: deleteUserByIDReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

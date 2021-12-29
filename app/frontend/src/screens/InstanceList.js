@@ -15,9 +15,11 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import { listInstances, changeInstanceStatus, deleteInstance } from '../actions/computeActions';
+import Cookie from 'js-cookie';
 
 function InstanceList(props) {
-    console.log("InstanceList Screen")
+    const userID = Cookie.getJSON('userInfo').userId
+    console.log("InstanceList Screen: ", userID)
     const instanceList = useSelector(state => state.instanceList);
     const changeInstanceStatusMessage = useSelector(state => state.changeInstanceStatus);
     const deleteInstanceMessage = useSelector(state => state.deleteInstance)
@@ -74,18 +76,18 @@ function InstanceList(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {instances?.length && instances?.map(instance => (<TableRow key={instance.hostname}>
+                        {instances?.length && instances?.filter(instance => instance.ownerID == userID).map(instance => (<TableRow key={instance.hostname}>
                             <TableCell><Link href={`/instance/${instance._id}`}>{instance.hostname}</Link></TableCell>
                             <TableCell style={{ color: instance.status === "running" ? "green" : "red" }}>{instance.status}</TableCell>
                             <TableCell>{instance.cpu}</TableCell>
-                            <TableCell>{instance.ram}</TableCell>
+                            <TableCell>{instance.ram} GB</TableCell>
                             <TableCell>
                                 <IconButton>
                                     <PowerSettingsNewIcon onClick={() => powerHandle(instance._id, instance.status === "running" ? "stopped" : "running")} />
                                 </IconButton>
                                 {/* <PlayArrowIcon /> */}
                                 <IconButton>
-                                    <DeleteIcon onClick={() => deleteHandle(instance._id)} />
+                                    <DeleteIcon onClick={() => (window.confirm('Are you sure you wish to delete this item?')) ? deleteHandle(instance._id) : {}} />
                                 </IconButton>
                                 <IconButton>
                                     <SettingsNewIcon />

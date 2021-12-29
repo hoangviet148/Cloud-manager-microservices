@@ -65,7 +65,7 @@ function TierList(props) {
                     </TableHead>
                     <TableBody>
                         {tiers?.length && tiers?.map(tier => (<TableRow key={tier.id}>
-                            <TableCell><Link href={`/tier/${tier.id}`}>{tier.name}</Link></TableCell>
+                            <TableCell><Link href={`/tier/${tier.name}`}>{tier.name}</Link></TableCell>
                             <TableCell>{tier.cost}</TableCell>
                             <TableCell>{tier.analytics.toString()}</TableCell>
                             <TableCell>

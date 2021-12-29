@@ -48,7 +48,6 @@ export default function RegisterScreen(props) {
     const [password, setPassword] = useState('');
 
     const userRegister = useSelector(state => state.userRegister);
-    // console.log(userRegister)
     const { loading, userInfo, error } = userRegister;
 
     const dispatch = useDispatch();
@@ -68,6 +67,7 @@ export default function RegisterScreen(props) {
     // register account
     const submitHandler = (e) => {
         e.preventDefault();
+        console.log(name)
         dispatch(register(name, email, phone, tier, payment, password));
     }
 

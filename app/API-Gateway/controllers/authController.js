@@ -2,9 +2,10 @@ const authClient = require("../grpc-client/auth/authClient")
 
 module.exports.register = async (req, res) => {
     console.log("api gateway - register controller")
+    console.log("req.body: ", req.body)
     try {
         let user = {
-            "username": req.body.username,
+            "username": req.body.name,
             "password": req.body.password,
             "role": "user",
             "email": req.body.email,
@@ -37,11 +38,16 @@ module.exports.login = async (req, res) => {
     }
 }
 
-module.exports.deleteUser = async (req, res) => {
+module.exports.changeUserStatus = async (req, res) => {
     try {
-
+        let id = req.params.id
+        console.log(id)
+        let response = await authClient.changeUserStatus({message: id});
+        console.log("response: ", response)
+        return res.status(200).json(response)
     } catch (error) {
-
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
     }
 }
 
@@ -81,6 +87,20 @@ module.exports.getUserByTier = async (req, res) => {
     console.log("tier: ", tier)
     try {
         let response = await authClient.getUserByTier({message: tier});
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}
+
+module.exports.deleteUserByID = async (req, res) => {
+    console.log("api gateway - deleteUserByID controller")
+    const id = req.params.id
+    console.log("id: ", id)
+    try {
+        let response = await authClient.deleteUserByID({message: id});
         console.log("response: ", response)
         return res.status(200).json(response)
     } catch (error) {

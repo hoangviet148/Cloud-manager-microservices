@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -30,6 +31,8 @@ import TierList from './screens/TierList';
 import TierDetail from './screens/TierDetail';
 import TierCreateForm from './screens/TierCreateForm';
 import InstanceCreate from './screens/InstanceCreate';
+import NetworkList from './screens/NetworkList';
+
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
@@ -103,9 +106,15 @@ export default function SideBar() {
         setOpen(false);
     };
 
-    // const userSignin = useSelector(state => state.userSignin);
-    const userSignin = ""
+    const logoutHandle = () => {
+        console.log("logoutHandle")
+        //Cookie.remove('userInfo')
+        //props.history.push('/signin');
+    }
+
+    const userSignin = useSelector(state => state.userSignin);
     const { userInfo } = userSignin;
+    console.log("side bar: ", userInfo)
 
     return (
         <BrowserRouter>
@@ -132,11 +141,13 @@ export default function SideBar() {
                             </Grid>
                             <Grid item xs={2} style={{ paddingTop: '0.4rem' }}>
                                 {
-                                    userInfo ? <Link to="/profile" style={{ fontSize: '1rem' }}>Welcome back, {userInfo.name}</Link> : null
+                                    userInfo ? <Link to="/signin"><ExitToAppIcon onClick={logoutHandle} /></Link> : null
 
                                 }
-                                <Link to="/profile"><PermIdentityIcon/> </Link>
-                                <Link to="/signin" ><ExitToAppIcon /></Link>
+                                {
+                                    userInfo ? <Link to="/profile"><PermIdentityIcon /> </Link> : null
+
+                                }
                             </Grid>
                         </Grid>
                     </Toolbar>
@@ -170,7 +181,7 @@ export default function SideBar() {
                             </Link>
                         </ListItem>
                         <ListItem button>
-                            <Link to="/network" style={{ textDecoration: 'none', color: '#203040' }}>
+                            <Link to="/networks" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
                                         <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
@@ -181,7 +192,7 @@ export default function SideBar() {
                                 </Grid>
                             </Link>
                         </ListItem>
-                        <ListItem button>
+                        {userInfo?.isAdmin ? (<ListItem button>
                             <Link to="/tiers" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
@@ -192,7 +203,7 @@ export default function SideBar() {
                                     </Grid>
                                 </Grid>
                             </Link>
-                        </ListItem>
+                        </ListItem>) : null}
                         <ListItem button>
                             <Link to="/resource" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
@@ -228,10 +239,10 @@ export default function SideBar() {
                         <Route path="/signin" component={SigninScreen} />
                         <Route path="/register" component={RegisterScreen} />
                         <Route path="/tiers" component={TierList} />
-                        <Route path="/tier/:id" component={TierDetail} />
+                        <Route path="/tier/:tier" component={TierDetail} />
                         <Route path="/tier-create" component={TierCreateForm} />
                         <Route path="/instance-create" component={InstanceCreate} />
-                        {/* <Route path="/product-update/:id" component={ProductUpdateForm} /> */}
+                        <Route path="/networks" component={NetworkList} />
                         {/* <Route path="/products-list" component={ProductList} /> */}
                         {/* <Route path="/shipping" component={ShippingScreen} /> */}
                         {/* <Route path="/payment" component={PaymentScreen} /> */}

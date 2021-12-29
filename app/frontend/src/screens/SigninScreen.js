@@ -14,8 +14,7 @@ import Container from '@material-ui/core/Container';
 import { useSelector, useDispatch } from 'react-redux';
 import { signin } from '../actions/userActions';
 import Alert from '@material-ui/lab/Alert';
-
-
+import Cookie from 'js-cookie';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -42,19 +41,17 @@ function SigninScreen(props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const userSignin = useSelector(state => state.userSignin);
-  //const userSignin = ""
   const { loading, userInfo, error } = userSignin;
   const dispatch = useDispatch();
 
   const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
   console.log(redirect)
 
-  
   useEffect(() => {
     if (userInfo) {
       props.history.push(redirect);
     } 
-  }, [userSignin]);
+  }, [userSignin, Cookie.getJSON('userInfo')]);
 
   const submitHandler = (e) => {
     e.preventDefault();

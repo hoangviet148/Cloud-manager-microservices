@@ -22,6 +22,9 @@ const userSchema = new Schema({
     },
     tier: {
         type: String
+    },
+    status: {
+        type: String
     }
 });
 

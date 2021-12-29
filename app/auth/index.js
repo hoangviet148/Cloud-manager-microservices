@@ -31,7 +31,7 @@ mongoose.connect(
 app.addService(authProto.AuthService.service, {
     register: async (call, callback) => {
         let req = call.request
-        console.log("req:" + req)
+        console.log("req:", req)
         try {
             const emailExists = await User.findOne({ email: req.email });
             console.log("emailExists:" + emailExists)
@@ -49,7 +49,8 @@ app.addService(authProto.AuthService.service, {
                 "email": req.email,
                 "phone": req.phone,
                 "payment": req.payment,
-                "tier": req.tier
+                "tier": req.tier,
+                "status": "enable"
             });
             // save user
             await newUser.save();
@@ -81,7 +82,9 @@ app.addService(authProto.AuthService.service, {
             const payload = {
                 userId: user._id,
                 created: new Date(),
-                user: user,
+                tier: user.tier,
+                isAdmin: user.role == "admin" ? true : false,
+                payment: user.payment
             };
 
             const token = await jwt.sign(payload, "secret", { expiresIn: "24h" });
@@ -131,8 +134,41 @@ app.addService(authProto.AuthService.service, {
         const tier = call.request.message
         console.log("req: ", call)
         try {
-            let users = await User.find({tier: tier});
+            let users = await User.find({ tier: tier });
             callback(null, { users: users });
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
+        }
+    },
+    changeUserStatus: async (call, callback) => {
+        console.log("auth-service - changeUserStatus")
+        const id = call.request.message
+        console.log("req: ", call)
+        try {
+            let user = await User.findOne({ _id: id });
+            user.status == "enable" ? user.status = "disable" : user.status = "enable"
+            await user.save()
+            callback(null, { message: "change status ok" });
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
+        }
+    },
+    deleteUserByID: async (call, callback) => {
+        console.log("auth-service - deleteUserByID")
+        const id = call.request.message
+        console.log("req: ", call)
+        try {
+            let res = await User.deleteOne({ _id: id });
+            console.log("res: ", res)
+            if (res.deletedCount == 0) {
+                throw "User not exist"
+            }
+            if (res.ok !== 1) {
+                throw "Error"
+            }
+            callback(null, { message: "delete ok" });
         } catch (error) {
             console.log("error: ", error)
             callback(null, { "message": error + " " });

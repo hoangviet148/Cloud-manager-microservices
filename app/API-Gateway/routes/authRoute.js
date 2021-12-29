@@ -22,4 +22,12 @@ router
 router
     .route("/getUserByTier/:tier")
     .get(controller.getUserByTier);
+
+router
+    .route("/changeUserStatus/:id")
+    .get(controller.changeUserStatus);
+
+router
+    .route("/deleteUserByID/:id")
+    .get(controller.deleteUserByID);
 module.exports = router;

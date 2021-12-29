@@ -4,13 +4,14 @@ message Empty {}
 
 message User {
     string id = 1;
-    string userName = 2;
+    string username = 2;
     string password = 3;
     string role = 4;
     string email = 5;
     string phone = 6;
     string payment = 7;
     string tier = 8;
+    string status = 9;
 }
 
 message Users {
@@ -44,4 +45,6 @@ service AuthService {
     rpc createTier(Tier) returns (Message) {}
     rpc getListTiers(Empty) returns (Tiers) {}
     rpc getUserByTier(Message) returns (Users) {}
+    rpc changeUserStatus(Message) returns (Message) {}
+    rpc deleteUserByID(Message) returns (Message) {}
 }
