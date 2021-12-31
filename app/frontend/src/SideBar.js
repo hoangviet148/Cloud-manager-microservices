@@ -32,6 +32,7 @@ import TierDetail from './screens/TierDetail';
 import TierCreateForm from './screens/TierCreateForm';
 import InstanceCreate from './screens/InstanceCreate';
 import NetworkList from './screens/NetworkList';
+import UserTier from './screens/UserTier';
 
 const drawerWidth = 240;
 
@@ -168,7 +169,7 @@ export default function SideBar() {
                     </div>
                     <Divider />
                     <List>
-                        <ListItem button>
+                        {userInfo?.isAdmin == true ? null : (<ListItem button>
                             <Link to="/instances" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
@@ -179,8 +180,8 @@ export default function SideBar() {
                                     </Grid>
                                 </Grid>
                             </Link>
-                        </ListItem>
-                        <ListItem button>
+                        </ListItem>)}
+                        {userInfo?.isAdmin ? null : (<ListItem button>
                             <Link to="/networks" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
@@ -191,8 +192,8 @@ export default function SideBar() {
                                     </Grid>
                                 </Grid>
                             </Link>
-                        </ListItem>
-                        {userInfo?.isAdmin ? (<ListItem button>
+                        </ListItem>)}
+                        <ListItem button>
                             <Link to="/tiers" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
@@ -203,7 +204,7 @@ export default function SideBar() {
                                     </Grid>
                                 </Grid>
                             </Link>
-                        </ListItem>) : null}
+                        </ListItem>
                         <ListItem button>
                             <Link to="/resource" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
@@ -238,7 +239,7 @@ export default function SideBar() {
                         <Route path="/" exact={true} component={HomeScreen} />
                         <Route path="/signin" component={SigninScreen} />
                         <Route path="/register" component={RegisterScreen} />
-                        <Route path="/tiers" component={TierList} />
+                        <Route path="/tiers" component={userInfo?.isAdmin ? TierList : UserTier} />
                         <Route path="/tier/:tier" component={TierDetail} />
                         <Route path="/tier-create" component={TierCreateForm} />
                         <Route path="/instance-create" component={InstanceCreate} />

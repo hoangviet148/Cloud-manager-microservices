@@ -173,6 +173,26 @@ app.addService(authProto.AuthService.service, {
             console.log("error: ", error)
             callback(null, { "message": error + " " });
         }
+    },
+    updateTierUsers: async (call, callback) => {
+        console.log("auth-service - updateTierUsers")
+        const tierName = call.request.tier
+        const id = call.request.userID
+        console.log("req: ", call.request)
+        try {
+            let tier = await Tier.findOne({ name: tierName });
+            console.log("tier: ", tier)
+            const index = tier.users.indexOf(id);
+            if (index > -1) {
+                tier.users.splice(index, 1);
+              }
+            await tier.save()
+            console.log("tier2: ", tier)
+            callback(null, { message: "update ok" });
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
+        }
     }
 })
 

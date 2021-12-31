@@ -31,7 +31,7 @@ function TierDetail(props) {
 
     // delete user
     const deleteHandler = (id) => {
-        dispatch(deleteUserByID(id));
+        dispatch(deleteUserByID(props.match.params.tier, id));
     }
 
     const toggleHandle = (id) => {

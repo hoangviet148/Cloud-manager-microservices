@@ -108,3 +108,20 @@ module.exports.deleteUserByID = async (req, res) => {
         return res.status(400).json({ message: error + " " })
     }
 }
+
+module.exports.updateTierUsers = async (req, res) => {
+    console.log("api gateway - updateTierUsers controller")
+    console.log("res: ", req.body)
+    try {
+        const data = {
+            tier: req.body.tier,
+            userID: req.body.userID
+        }
+        let response = await authClient.updateTierUsers(data);
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}

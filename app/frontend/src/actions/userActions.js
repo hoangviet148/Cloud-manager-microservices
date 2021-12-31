@@ -57,11 +57,15 @@ const changeUserStatus = (id) => async (dispatch) => {
   }
 }
 
-const deleteUserByID = (id) => async (dispatch) => {
+const deleteUserByID = (tier, id) => async (dispatch) => {
   console.log("deleteUserByID action")
   dispatch({ type: DELETE_USER_BY_ID_REQUEST, payload: { id } });
   try {
     const { data } = await axios.get(`http://localhost:8080/api/auth/deleteUserByID/${id}`);
+    await axios.post('http://localhost:8080/api/auth/updateTierUsers', {
+      tier: tier,
+      userID: id
+    })
     dispatch({ type: DELETE_USER_BY_ID_SUCCESS, payload: data });
   } catch (error) {
     dispatch({ type: DELETE_USER_BY_ID_FAIL, payload: error.message });

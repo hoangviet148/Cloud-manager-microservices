@@ -10,4 +10,12 @@ router
 router
     .route("/getAllNetworks")
     .get(controller.getAllNetworks);
+
+router
+    .route("/deleteNetworkByID/:id")
+    .get(controller.deleteNetworkByID);
+
+router
+    .route("/changeNetworkStatus/:id")
+    .get(controller.changeNetworkStatus);
 module.exports = router;

@@ -18,7 +18,7 @@ import { listInstances, changeInstanceStatus, deleteInstance } from '../actions/
 import Cookie from 'js-cookie';
 
 function InstanceList(props) {
-    const userID = Cookie.getJSON('userInfo').userId
+    const userID = Cookie.getJSON('userInfo')?.userId
     console.log("InstanceList Screen: ", userID)
     const instanceList = useSelector(state => state.instanceList);
     const changeInstanceStatusMessage = useSelector(state => state.changeInstanceStatus);

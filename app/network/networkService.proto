@@ -6,8 +6,10 @@ message Network {
     string id = 1;
     string name = 2;
     string ownerID = 3;
-    string state = 4;
+    string status = 4;
     string IPv4 = 5;
+    string dhcp = 6;
+    string ipForward = 7;
 }
 
 message Networks {
@@ -21,4 +23,6 @@ message Message {
 service NetworkService {
     rpc createNetwork(Network) returns (Message) {}
     rpc getAllNetworks(Empty) returns (Networks) {}
+    rpc deleteNetworkByID(Message) returns (Message) {}
+    rpc changeNetworkStatus(Message) returns (Message) {}
 }

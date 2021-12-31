@@ -8,11 +8,17 @@ const networkSchema = new Schema({
     name: {
         type: String
     },
-    state: {
+    status: {
         type: String
     },
     IPv4: {
         type: String
+    },
+    ip_forward: {
+        type: String
+    },
+    dhcp: {
+        type: Boolean
     }
 });
 

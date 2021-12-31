@@ -30,4 +30,9 @@ router
 router
     .route("/deleteUserByID/:id")
     .get(controller.deleteUserByID);
+
+router
+    .route("/updateTierUsers")
+    .post(controller.updateTierUsers);
+
 module.exports = router;

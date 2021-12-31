@@ -15,6 +15,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { getAllNetworks } from '../actions/networkActions';
 import { createInstance } from '../actions/computeActions';
+import Cookie from 'js-cookie';
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -47,7 +48,7 @@ function InstanceCreate(props) {
 
     const res = useSelector(state => {
         console.log(state)
-        return state.AllNetworks.network
+        return state.AllNetworks.networks
     });
     const networks = res?.networks;
     console.log("networks: ", networks)
@@ -61,7 +62,7 @@ function InstanceCreate(props) {
 
     const submitHandler = async (e) => {
         e.preventDefault();
-        await dispatch(createInstance(name, "ownerID", CPU, ram, disk, network))
+        await dispatch(createInstance(name,  Cookie.getJSON('userInfo')?.userId, CPU, ram, disk, network))
         props.history.push("/instances");
     }
 
@@ -151,7 +152,7 @@ function InstanceCreate(props) {
                                     label="network"
                                     onChange={(e) => setNetwork(e.target.value)}
                                 >
-                                    {networks?.length && networks.map(network => (<MenuItem value={network.id}>{network.name}</MenuItem>))}
+                                    {networks?.length && networks.filter(network => network.status === "active").map(network => (<MenuItem value={network.id}>{network.name}</MenuItem>))}
                                 </Select>
                             </FormControl>
                         </Grid>

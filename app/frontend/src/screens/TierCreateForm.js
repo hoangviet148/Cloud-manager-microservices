@@ -54,10 +54,10 @@ function TierCreateForm(props) {
     return (
         <div className="content content-margined">
             <div className="back-to-result">
-                <Link href="../products-list" style={{ cursor: 'pointer', textDecoration: 'none' }}>
+                <Link href="../tiers" style={{ cursor: 'pointer', textDecoration: 'none' }}>
                     <Grid container style={{ width: '15rem' }}>
                         <Grid item xs={2}><ArrowBackIcon /></Grid>
-                        <Grid item xs={10}>Back to Product list</Grid>
+                        <Grid item xs={10}>Back to Tier list</Grid>
                     </Grid>
                 </Link>
             </div>
@@ -68,8 +68,6 @@ function TierCreateForm(props) {
                         Create Tier
           </Typography>
                     <form className={classes.form} onSubmit={submitHandler}>
-                        {"loadingSave" && <div>Loading...</div>}
-                        {"errorSave" && <div>"errorSave"</div>}
                         <Grid container spacing={3}>
                             <Grid item xs={6}>
                                 <TextField

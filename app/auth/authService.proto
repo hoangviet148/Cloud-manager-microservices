@@ -39,6 +39,11 @@ message Message {
     string message = 1;
 }
 
+message TierUsersRequest {
+    string tier = 1;
+    string userID = 2;
+}
+
 service AuthService {
     rpc register(User) returns (Message) {}
     rpc login(LoginRequest) returns (Message) {}
@@ -47,4 +52,5 @@ service AuthService {
     rpc getUserByTier(Message) returns (Users) {}
     rpc changeUserStatus(Message) returns (Message) {}
     rpc deleteUserByID(Message) returns (Message) {}
+    rpc updateTierUsers(TierUsersRequest) returns (Message) {}
 }

@@ -43,7 +43,7 @@ function TierList(props) {
                         </Typography>
                     </Grid>
                     <Grid item xs={4} style={{ paddingLeft: '12rem' }}>
-                        <Link href="../instance-create" >
+                        <Link href="../tier-create" >
                             <Grid container>
                                 <Button variant="contained" color="primary">
                                     New Tier
@@ -60,6 +60,7 @@ function TierList(props) {
                             <TableCell>Name</TableCell>
                             <TableCell>Cost</TableCell>
                             <TableCell>Analytics</TableCell>
+                            <TableCell>Users</TableCell>
                             <TableCell>Actions</TableCell>
                         </TableRow>
                     </TableHead>
@@ -68,6 +69,7 @@ function TierList(props) {
                             <TableCell><Link href={`/tier/${tier.name}`}>{tier.name}</Link></TableCell>
                             <TableCell>{tier.cost}</TableCell>
                             <TableCell>{tier.analytics.toString()}</TableCell>
+                            <TableCell>{tier.users !== undefined ? tier.users.length : 0}</TableCell>
                             <TableCell>
                                 <Link onClick={() => (window.confirm('Are you sure you wish to delete this item?')) ? deleteHandler(tier) : {}} style={{ color: "#203040", cursor: 'pointer' }}><DeleteIcon /></Link>
                                 <Link href={"../tier-update/" + tier.id} style={{ color: "#203040", cursor: 'pointer' }}><CreateIcon /></Link>
