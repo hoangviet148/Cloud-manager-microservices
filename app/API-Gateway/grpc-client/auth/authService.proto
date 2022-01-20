@@ -24,6 +24,7 @@ message Tier {
     string cost = 3;
     bool analytics = 4;
     repeated string users = 5;
+    repeated string pricingDetail = 6;
 }
 
 message Tiers {
@@ -53,4 +54,5 @@ service AuthService {
     rpc changeUserStatus(Message) returns (Message) {}
     rpc deleteUserByID(Message) returns (Message) {}
     rpc updateTierUsers(TierUsersRequest) returns (Message) {}
+    rpc changeUserTier(TierUsersRequest) returns (Message) {}
 }

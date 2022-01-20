@@ -1,4 +1,3 @@
-import { PricingTable, PricingSlot, PricingDetail } from "react-pricing-table";
 import React, { useEffect } from 'react';
 import {
     ComposedChart,
@@ -12,7 +11,10 @@ import {
 } from 'recharts';
 import { useSelector, useDispatch } from 'react-redux';
 import { listTiers } from '../actions/tierActions';
+import { changeUserTier } from '../actions/userActions';
 import Cookie from 'js-cookie';
+import './pricingTable.css';
+import Button from '@mui/material/Button';
 
 const data = [
     {
@@ -79,30 +81,41 @@ const data = [
 ];
 
 function UserTier(props) {
-    const Tier = Cookie.getJSON('userInfo')?.tier
-    console.log(Tier)
+    const userId = Cookie.getJSON('userInfo')?.userId
     const tierList = useSelector(state => state.tierList);
-    console.log("payload: ", tierList)
+    const changeUserTierRes = useSelector(state => state.changeUserTier);
+    console.log("payload UserTier: ", tierList, changeUserTierRes)
     const dispatch = useDispatch();
 
-    const buttonHandle = (id, newTier) => {
+    const buttonHandle = (tier) => {
         console.log("buttonHandle")
+        dispatch(changeUserTier(tier, userId));
     }
 
     useEffect(() => {
         console.log("useEffect")
         dispatch(listTiers());
-    }, [])
+    }, [changeUserTierRes])
+
+    function PricingSlot(tier) {
+        return (
+            <div class="columns">
+                <ul class="price">
+                    <li class="header">{tier.name}</li>
+                    <li class="grey">$ {tier.cost} / month</li>
+                    {tier.pricingDetail.map(item => <li>{item}</li>)}
+                    {tier.users?.indexOf(userId) > -1 ? <li><strong><p>Current Tier</p></strong></li> : <li><Button onClick={() => buttonHandle(tier.name)} variant="contained">CHOOSE</Button></li>}
+                </ul>
+            </div>
+        )
+    }
 
     return (
         <div>
             <div>
-                <PricingTable highlightColor="#1976D2">
-                    {tierList?.tiers?.map(tier => tier.name === Tier ? PriceSlotHightlight(tier) : PriceSlot(tier))}
-                </PricingTable>
+                {tierList?.tiers?.map(tier => PricingSlot(tier))}
             </div>
-
-            <div style={{ position: 'relative', height: '100%', width: "100%" }}>
+            {/* <div style={{ position: 'relative', height: '100%', width: "100%" }}>
                 <ComposedChart
                     width={1800}
                     height={400}
@@ -110,7 +123,7 @@ function UserTier(props) {
                     margin={{
                         top: 20,
                         right: 20,
-                        bottom: 20,
+                        bottom: 0,
                         left: 20,
                     }}
                 >
@@ -122,29 +135,11 @@ function UserTier(props) {
                     <Bar dataKey="money" barSize={40} fill="#413ea0" />
                     <Line type="monotone" dataKey="money" stroke="#ff7300" />
                 </ComposedChart>
-            </div>
+            </div> */}
         </div>
     )
 }
 
-function PriceSlot(tier) {
-    return (
-        <PricingSlot buttonText="CHOOSE"  title={tier.name} priceText={"$" + tier.cost + "/month"}>
-            <PricingDetail> Watch Free Content </PricingDetail>
-            <PricingDetail> Hundreds of Episodes from our Library</PricingDetail>
-            <PricingDetail> Hundres of Short Form Pieces</PricingDetail>
-        </PricingSlot>
-    )
-}
 
-function PriceSlotHightlight(tier) {
-    return (
-        <PricingSlot highlighted title={tier.name} priceText={"$" + tier.cost + "/month"}>
-            <PricingDetail> Watch Free Content </PricingDetail>
-            <PricingDetail> Hundreds of Episodes from our Library</PricingDetail>
-            <PricingDetail> Hundres of Short Form Pieces</PricingDetail>
-        </PricingSlot>
-    )
-}
 
 export default UserTier;

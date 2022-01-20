@@ -6,7 +6,6 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import DeleteIcon from '@material-ui/icons/Delete';
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew';
 import SettingsNewIcon from '@material-ui/icons/Settings';
@@ -43,8 +42,12 @@ function InstanceList(props) {
         dispatch(deleteInstance(id));
     }
 
-    return (
+    const settingHandle = (id) => {
+        console.log("settinghandle: ", id, props)
+        window.location.href = `http://localhost:3000/instance-update/${id}`
+    }
 
+    return (
         <div className="content content-margined">
             <div className="product-header">
                 <Grid container>
@@ -72,6 +75,7 @@ function InstanceList(props) {
                             <TableCell>Status</TableCell>
                             <TableCell>CPU's</TableCell>
                             <TableCell>Memory</TableCell>
+                            <TableCell>Storage</TableCell>
                             <TableCell>Action</TableCell>
                         </TableRow>
                     </TableHead>
@@ -81,16 +85,16 @@ function InstanceList(props) {
                             <TableCell style={{ color: instance.status === "running" ? "green" : "red" }}>{instance.status}</TableCell>
                             <TableCell>{instance.cpu}</TableCell>
                             <TableCell>{instance.ram} GB</TableCell>
+                            <TableCell>{instance.disk} GB</TableCell>
                             <TableCell>
                                 <IconButton>
                                     <PowerSettingsNewIcon onClick={() => powerHandle(instance._id, instance.status === "running" ? "stopped" : "running")} />
                                 </IconButton>
-                                {/* <PlayArrowIcon /> */}
                                 <IconButton>
                                     <DeleteIcon onClick={() => (window.confirm('Are you sure you wish to delete this item?')) ? deleteHandle(instance._id) : {}} />
                                 </IconButton>
                                 <IconButton>
-                                    <SettingsNewIcon />
+                                    <SettingsNewIcon onClick={() => settingHandle(instance._id)} />
                                 </IconButton>
                             </TableCell>
                         </TableRow>))}

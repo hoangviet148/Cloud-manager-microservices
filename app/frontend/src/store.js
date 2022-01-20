@@ -7,13 +7,15 @@ import {
     userSigninReducer,
     getUsersByTierReducer,
     changeUserStatusReducer,
-    deleteUserByIDReducer
+    deleteUserByIDReducer,
+    changeUserTierReducer
 } from './reducers/userReducer'
 import {
     instanceListReducer,
     changeInstanceStatusReducer,
     getInstanceByIDReducer,
-    deleteInstanceReducer
+    deleteInstanceReducer,
+    getInstanceByOwnerIDReducer
 } from './reducers/computeReducers';
 import {
     getAllNetworksReducer,
@@ -39,7 +41,9 @@ const reducer = combineReducers({
     changeUserStatus: changeUserStatusReducer,
     deleteUserByID: deleteUserByIDReducer,
     deleteNetworkByID: deleteNetworkByIDReducer,
-    changeNetworkStatus: changeNetworkStatusReducer
+    changeNetworkStatus: changeNetworkStatusReducer,
+    changeUserTier: changeUserTierReducer,
+    getInstanceByOwnerID: getInstanceByOwnerIDReducer
 })
 
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

@@ -23,4 +23,8 @@ router
     .route("/deleteInstance/:id")
     .post(controller.deleteInstance);
 
+router
+    .route("/getInstanceByOwnerID/:ownerID")
+    .get(controller.getInstanceByOwnerID);
+
 module.exports = router;

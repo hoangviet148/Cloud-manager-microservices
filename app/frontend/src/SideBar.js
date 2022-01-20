@@ -33,6 +33,10 @@ import TierCreateForm from './screens/TierCreateForm';
 import InstanceCreate from './screens/InstanceCreate';
 import NetworkList from './screens/NetworkList';
 import UserTier from './screens/UserTier';
+import Overview from './screens/Overview';
+import Cookie from 'js-cookie';
+import LoginIcon from '@mui/icons-material/Login';
+import AppRegistrationRoundedIcon from '@mui/icons-material/AppRegistrationRounded';
 
 const drawerWidth = 240;
 
@@ -94,6 +98,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SideBar() {
+    //console.log("sidebar: ", props)
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -109,8 +114,18 @@ export default function SideBar() {
 
     const logoutHandle = () => {
         console.log("logoutHandle")
-        //Cookie.remove('userInfo')
-        //props.history.push('/signin');
+        window.location.href = 'http://localhost:3000/signin';
+        Cookie.remove('userInfo')
+    }
+
+    const loginHandle = () => {
+        console.log("loginHandle")
+        window.location.href = 'http://localhost:3000/signin';
+    }
+
+    const registerHandle = () => {
+        console.log("registerHandle")
+        window.location.href = 'http://localhost:3000/register';
     }
 
     const userSignin = useSelector(state => state.userSignin);
@@ -142,11 +157,11 @@ export default function SideBar() {
                             </Grid>
                             <Grid item xs={2} style={{ paddingTop: '0.4rem' }}>
                                 {
-                                    userInfo ? <Link to="/signin"><ExitToAppIcon onClick={logoutHandle} /></Link> : null
+                                    userInfo ? <Link to="/signin"><ExitToAppIcon onClick={logoutHandle} /></Link> : <Link><LoginIcon onClick={loginHandle} /></Link>
 
                                 }
                                 {
-                                    userInfo ? <Link to="/profile"><PermIdentityIcon /> </Link> : null
+                                    userInfo ? <Link to="/profile"><PermIdentityIcon /> </Link> : <Link><AppRegistrationRoundedIcon onClick={registerHandle} /></Link>
 
                                 }
                             </Grid>
@@ -169,7 +184,7 @@ export default function SideBar() {
                     </div>
                     <Divider />
                     <List>
-                        {userInfo?.isAdmin == true ? null : (<ListItem button>
+                        {userInfo?.isAdmin === true ? null : (<ListItem button>
                             <Link to="/instances" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
@@ -243,15 +258,9 @@ export default function SideBar() {
                         <Route path="/tier/:tier" component={TierDetail} />
                         <Route path="/tier-create" component={TierCreateForm} />
                         <Route path="/instance-create" component={InstanceCreate} />
+                        <Route path="/instance-update/:id" component={InstanceCreate} />
                         <Route path="/networks" component={NetworkList} />
-                        {/* <Route path="/products-list" component={ProductList} /> */}
-                        {/* <Route path="/shipping" component={ShippingScreen} /> */}
-                        {/* <Route path="/payment" component={PaymentScreen} /> */}
-                        {/* <Route path="/placeorder" component={PlaceOrderScreen} /> */}
-                        {/* <Route path="/profile" component={ProfileScreen} /> */}
-                        {/* <Route path="/orders-list" component={OrdersScreen} /> */}
-                        {/* <Route path="/category/:id" component={HomeScreen} /> */}
-                        {/* <Route path="/users" component={UserList} /> */}
+                        <Route path="/overview" component={Overview} />
                     </div>
                 </main>
             </div>

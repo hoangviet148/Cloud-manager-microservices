@@ -3,7 +3,8 @@ import {
   USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL, USER_LOGOUT,
   GET_USERS_BY_TIER_REQUEST, GET_USERS_BY_TIER_SUCCESS, GET_USERS_BY_TIER_FAIL,
   CHANGE_USER_STATUS_REQUEST, CHANGE_USER_STATUS_SUCCESS, CHANGE_USER_STATUS_FAIL,
-  DELETE_USER_BY_ID_REQUEST, DELETE_USER_BY_ID_SUCCESS, DELETE_USER_BY_ID_FAIL
+  DELETE_USER_BY_ID_REQUEST, DELETE_USER_BY_ID_SUCCESS, DELETE_USER_BY_ID_FAIL,
+  CHANGE_USER_TIER_REQUEST, CHANGE_USER_TIER_SUCCESS, CHANGE_USER_TIER_FAIL
 } from "../constants/userConstants";
 
 
@@ -73,10 +74,24 @@ function deleteUserByIDReducer(state = {}, action) {
   }
 }
 
+function changeUserTierReducer(state = {}, action) {
+  console.log("changeUserTier reducer: ", action)
+  switch (action.type) {
+    case CHANGE_USER_TIER_REQUEST:
+      return { loading: true };
+    case CHANGE_USER_TIER_SUCCESS:
+      return action.payload;
+    case CHANGE_USER_TIER_FAIL:
+      return { error: action.payload };
+    default: return state;
+  }
+}
+
 export {
   userRegisterReducer,
   userSigninReducer,
   getUsersByTierReducer,
   changeUserStatusReducer,
-  deleteUserByIDReducer
+  deleteUserByIDReducer,
+  changeUserTierReducer
 }

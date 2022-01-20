@@ -3,7 +3,8 @@ import {
     CHANGE_INSTANCE_STATUS_REQUEST, CHANGE_INSTANCE_STATUS_SUCCESS, CHANGE_INSTANCE_STATUS_FAIL,
     GET_INSTANCE_BY_ID_REQUEST, GET_INSTANCE_BY_ID_SUCCESS, GET_INSTANCE_BY_ID_FAIL,
     CREATE_NEW_INSTANCE_REQUEST, CREATE_NEW_INSTANCE_SUCCESS, CREATE_NEW_INSTANCE_FAIL,
-    DELETE_INSTANCE_REQUEST, DELETE_INSTANCE_SUCCESS, DELETE_INSTANCE_FAIL
+    DELETE_INSTANCE_REQUEST, DELETE_INSTANCE_SUCCESS, DELETE_INSTANCE_FAIL,
+    GET_INSTANCES_BY_OWNERID_REQUEST, GET_INSTANCES_BY_OWNERID_SUCCESS, GET_INSTANCES_BY_OWNERID_FAIL
 } from "../constants/computeConstants.js";
 
 function instanceListReducer(state = {}, action) {
@@ -81,10 +82,27 @@ function deleteInstanceReducer(state = {}, action) {
     }
 }
 
+function getInstanceByOwnerIDReducer(state = {}, action) {
+    console.log("getInstanceByOwnerIDReducer Reducer")
+    console.log("reducer action:", action)
+    switch (action.type) {
+        case GET_INSTANCES_BY_OWNERID_REQUEST:
+            return { message: "request" };
+        case GET_INSTANCES_BY_OWNERID_SUCCESS:
+            return { instance: action.payload };
+        case GET_INSTANCES_BY_OWNERID_FAIL:
+            return { error: action.payload };
+        default:
+            return state;
+    }
+}
+
+
 export {
     instanceListReducer,
     changeInstanceStatusReducer,
     getInstanceByIDReducer,
     createInstance,
-    deleteInstanceReducer
+    deleteInstanceReducer,
+    getInstanceByOwnerIDReducer
 }

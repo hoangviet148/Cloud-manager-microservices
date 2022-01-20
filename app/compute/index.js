@@ -39,7 +39,7 @@ app.addService(computeProto.ComputeService.service, {
                 "disk": req.disk,
                 "cpu": req.cpu,
                 "ram": req.ram,
-                "IPv4": "IP"
+                "IPv4": req.ip
             })
 
             await newCompute.save();
@@ -98,6 +98,20 @@ app.addService(computeProto.ComputeService.service, {
             }
             console.log("res: ", res)
             callback(null, { message: res.ok });
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
+        }
+    },
+    getInstanceByOwnerID: async (call, callback) => {
+        let req = call.request
+        console.log("req: ", req)
+        console.log("compute-service - getInstanceByOwnerID")
+        try {
+            let res = await Compute.find({ ownerID: req.message });
+
+            console.log("res: ", res)
+            callback(null, { instances: res });
         } catch (error) {
             console.log("error: ", error)
             callback(null, { "message": error + " " });

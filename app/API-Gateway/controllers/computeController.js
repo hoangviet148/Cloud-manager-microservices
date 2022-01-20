@@ -77,3 +77,16 @@ module.exports.deleteInstance = async (req, res) => {
         return res.status(400).json({ message: error + " " })
     }
 }
+
+module.exports.getInstanceByOwnerID = async (req, res) => {
+    console.log("api gateway - getInstanceByOwnerID controller")
+    console.log("res: ", req.body)
+    try {
+        let response = await computeClient.getInstanceByOwnerID({ message: req.params.ownerID });
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}

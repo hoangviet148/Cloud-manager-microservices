@@ -42,7 +42,7 @@ module.exports.changeUserStatus = async (req, res) => {
     try {
         let id = req.params.id
         console.log(id)
-        let response = await authClient.changeUserStatus({message: id});
+        let response = await authClient.changeUserStatus({ message: id });
         console.log("response: ", response)
         return res.status(200).json(response)
     } catch (error) {
@@ -86,7 +86,7 @@ module.exports.getUserByTier = async (req, res) => {
     const tier = req.params.tier
     console.log("tier: ", tier)
     try {
-        let response = await authClient.getUserByTier({message: tier});
+        let response = await authClient.getUserByTier({ message: tier });
         console.log("response: ", response)
         return res.status(200).json(response)
     } catch (error) {
@@ -100,7 +100,7 @@ module.exports.deleteUserByID = async (req, res) => {
     const id = req.params.id
     console.log("id: ", id)
     try {
-        let response = await authClient.deleteUserByID({message: id});
+        let response = await authClient.deleteUserByID({ message: id });
         console.log("response: ", response)
         return res.status(200).json(response)
     } catch (error) {
@@ -125,3 +125,21 @@ module.exports.updateTierUsers = async (req, res) => {
         return res.status(400).json({ message: error + " " })
     }
 }
+
+module.exports.changeUserTier = async (req, res) => {
+    console.log("api gateway - changeUserTier controller")
+    console.log("res: ", req.body)
+    try {
+        const data = {
+            tier: req.body.tier,
+            userID: req.body.userID
+        }
+        let response = await authClient.changeUserTier(data);
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}
+

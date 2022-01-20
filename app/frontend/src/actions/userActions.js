@@ -7,7 +7,8 @@ import {
   USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS, USER_SIGNIN_FAIL,
   GET_USERS_BY_TIER_REQUEST, GET_USERS_BY_TIER_SUCCESS, GET_USERS_BY_TIER_FAIL,
   CHANGE_USER_STATUS_REQUEST, CHANGE_USER_STATUS_SUCCESS, CHANGE_USER_STATUS_FAIL,
-  DELETE_USER_BY_ID_REQUEST, DELETE_USER_BY_ID_SUCCESS, DELETE_USER_BY_ID_FAIL
+  DELETE_USER_BY_ID_REQUEST, DELETE_USER_BY_ID_SUCCESS, DELETE_USER_BY_ID_FAIL,
+  CHANGE_USER_TIER_REQUEST, CHANGE_USER_TIER_SUCCESS, CHANGE_USER_TIER_FAIL
 } from "../constants/userConstants.js";
 
 const register = (name, email, phone, tier, payment, password) => async (dispatch) => {
@@ -72,4 +73,18 @@ const deleteUserByID = (tier, id) => async (dispatch) => {
   }
 }
 
-export { register, signin, getUsersByTier, changeUserStatus, deleteUserByID };
+const changeUserTier = (tier, id) => async (dispatch) => {
+  console.log("changeUserTier action")
+  dispatch({ type: CHANGE_USER_TIER_REQUEST, payload: { id } });
+  try {
+    let data = await axios.post('http://localhost:8080/api/auth/changeUserTier', {
+      tier: tier,
+      userID: id
+    })
+    dispatch({ type: CHANGE_USER_TIER_SUCCESS, payload: data });
+  } catch (error) {
+    dispatch({ type: CHANGE_USER_TIER_FAIL, payload: error.message });
+  }
+}
+
+export { register, signin, getUsersByTier, changeUserStatus, deleteUserByID, changeUserTier };

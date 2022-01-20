@@ -35,4 +35,8 @@ router
     .route("/updateTierUsers")
     .post(controller.updateTierUsers);
 
+router
+    .route("/changeUserTier")
+    .post(controller.changeUserTier);
+
 module.exports = router;

@@ -5,7 +5,8 @@ import {
     CHANGE_INSTANCE_STATUS_REQUEST, CHANGE_INSTANCE_STATUS_SUCCESS, CHANGE_INSTANCE_STATUS_FAIL,
     GET_INSTANCE_BY_ID_REQUEST, GET_INSTANCE_BY_ID_SUCCESS, GET_INSTANCE_BY_ID_FAIL,
     CREATE_NEW_INSTANCE_REQUEST, CREATE_NEW_INSTANCE_SUCCESS, CREATE_NEW_INSTANCE_FAIL,
-    DELETE_INSTANCE_REQUEST, DELETE_INSTANCE_SUCCESS, DELETE_INSTANCE_FAIL
+    DELETE_INSTANCE_REQUEST, DELETE_INSTANCE_SUCCESS, DELETE_INSTANCE_FAIL,
+    GET_INSTANCES_BY_OWNERID_REQUEST, GET_INSTANCES_BY_OWNERID_SUCCESS, GET_INSTANCES_BY_OWNERID_FAIL
 } from "../constants/computeConstants.js";
 
 const listInstances = () => async (dispatch) => {
@@ -78,10 +79,23 @@ const deleteInstance = (id) => async (dispatch) => {
     }
 }
 
+const getInstanceByOwnerID = (id) => async (dispatch) => {
+    console.log("getInstanceByOwnerID action: ", id)
+    dispatch({ type: GET_INSTANCES_BY_OWNERID_REQUEST, payload: {} });
+    try {
+        const { data } = await axios.get(`http://localhost:8080/api/compute/getInstanceByOwnerID/${id}`);
+        console.log("action payload: ", data)
+        dispatch({ type: GET_INSTANCES_BY_OWNERID_SUCCESS, payload: data });
+    } catch (error) {
+        dispatch({ type: GET_INSTANCES_BY_OWNERID_FAIL, payload: error.message });
+    }
+}
+
 export { 
     listInstances, 
     changeInstanceStatus, 
     getInstanceByID,
     createInstance,
-    deleteInstance
+    deleteInstance,
+    getInstanceByOwnerID
 };

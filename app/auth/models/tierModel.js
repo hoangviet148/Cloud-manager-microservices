@@ -18,6 +18,9 @@ const tierSchema = new Schema({
     users: [{
         type: Schema.Types.ObjectId,
         ref: User
+    }],
+    pricingDetail: [{
+        type: String
     }]
 });
 
