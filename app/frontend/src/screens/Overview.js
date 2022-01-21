@@ -28,7 +28,7 @@ function Overview() {
     let cpuAvaiable = 0;
     let instancesAvaiable = 0;
 
-    const tier = Cookie.getJSON('userInfo')?.tier
+    const tier = Cookie.getJSON('tier')
     switch (tier) {
         case 'Basic':
             ramAvaiable = 32;

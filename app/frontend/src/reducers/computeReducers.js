@@ -4,7 +4,8 @@ import {
     GET_INSTANCE_BY_ID_REQUEST, GET_INSTANCE_BY_ID_SUCCESS, GET_INSTANCE_BY_ID_FAIL,
     CREATE_NEW_INSTANCE_REQUEST, CREATE_NEW_INSTANCE_SUCCESS, CREATE_NEW_INSTANCE_FAIL,
     DELETE_INSTANCE_REQUEST, DELETE_INSTANCE_SUCCESS, DELETE_INSTANCE_FAIL,
-    GET_INSTANCES_BY_OWNERID_REQUEST, GET_INSTANCES_BY_OWNERID_SUCCESS, GET_INSTANCES_BY_OWNERID_FAIL
+    GET_INSTANCES_BY_OWNERID_REQUEST, GET_INSTANCES_BY_OWNERID_SUCCESS, GET_INSTANCES_BY_OWNERID_FAIL,
+    UPDATE_INSTANCE_REQUEST, UPDATE_INSTANCE_SUCCESS, UPDATE_INSTANCE_FAIL
 } from "../constants/computeConstants.js";
 
 function instanceListReducer(state = {}, action) {
@@ -37,8 +38,8 @@ function changeInstanceStatusReducer(state = {}, action) {
     }
 }
 
-function createInstance(state = {}, action) {
-    console.log("createInstance Reducer")
+function createInstanceReducer(state = {}, action) {
+    console.log("createInstanceReducer Reducer")
     console.log("reducer action:", action)
     switch (action.type) {
         case CREATE_NEW_INSTANCE_REQUEST:
@@ -46,6 +47,21 @@ function createInstance(state = {}, action) {
         case CREATE_NEW_INSTANCE_SUCCESS:
             return { message: action.payload };
         case CREATE_NEW_INSTANCE_FAIL:
+            return { error: action.payload };
+        default:
+            return state;
+    }
+}
+
+function updateInstanceReducer(state = {}, action) {
+    console.log("updateInstanceReducer Reducer")
+    console.log("reducer action:", action)
+    switch (action.type) {
+        case UPDATE_INSTANCE_REQUEST:
+            return { message: "request" };
+        case UPDATE_INSTANCE_SUCCESS:
+            return { message: action.payload };
+        case UPDATE_INSTANCE_FAIL:
             return { error: action.payload };
         default:
             return state;
@@ -102,7 +118,8 @@ export {
     instanceListReducer,
     changeInstanceStatusReducer,
     getInstanceByIDReducer,
-    createInstance,
+    createInstanceReducer,
     deleteInstanceReducer,
-    getInstanceByOwnerIDReducer
+    getInstanceByOwnerIDReducer,
+    updateInstanceReducer
 }

@@ -55,4 +55,5 @@ service AuthService {
     rpc deleteUserByID(Message) returns (Message) {}
     rpc updateTierUsers(TierUsersRequest) returns (Message) {}
     rpc changeUserTier(TierUsersRequest) returns (Message) {}
+    rpc getTierByUserID(Message) returns (Tier) {}
 }

@@ -6,7 +6,8 @@ import {
     GET_INSTANCE_BY_ID_REQUEST, GET_INSTANCE_BY_ID_SUCCESS, GET_INSTANCE_BY_ID_FAIL,
     CREATE_NEW_INSTANCE_REQUEST, CREATE_NEW_INSTANCE_SUCCESS, CREATE_NEW_INSTANCE_FAIL,
     DELETE_INSTANCE_REQUEST, DELETE_INSTANCE_SUCCESS, DELETE_INSTANCE_FAIL,
-    GET_INSTANCES_BY_OWNERID_REQUEST, GET_INSTANCES_BY_OWNERID_SUCCESS, GET_INSTANCES_BY_OWNERID_FAIL
+    GET_INSTANCES_BY_OWNERID_REQUEST, GET_INSTANCES_BY_OWNERID_SUCCESS, GET_INSTANCES_BY_OWNERID_FAIL,
+    UPDATE_INSTANCE_REQUEST, UPDATE_INSTANCE_SUCCESS, UPDATE_INSTANCE_FAIL
 } from "../constants/computeConstants.js";
 
 const listInstances = () => async (dispatch) => {
@@ -60,10 +61,11 @@ const createInstance = (hostname, ownerID, cpu, ram, disk, networkID) => async (
             ram: ram,
             cpu: cpu
         });
+        if (data.message.includes("error")) throw data.message
         console.log("action payload: ", data)
         dispatch({ type: CREATE_NEW_INSTANCE_SUCCESS, payload: data.message });
     } catch (error) {
-        dispatch({ type: CREATE_NEW_INSTANCE_FAIL, payload: error.message });
+        dispatch({ type: CREATE_NEW_INSTANCE_FAIL, payload: error });
     }
 }
 
@@ -91,11 +93,32 @@ const getInstanceByOwnerID = (id) => async (dispatch) => {
     }
 }
 
-export { 
-    listInstances, 
-    changeInstanceStatus, 
+const updateInstance = (hostname, ownerID, disk, cpu, ram, id) => async (dispatch) => {
+    console.log("create Instance action: ")
+    dispatch({ type: UPDATE_INSTANCE_REQUEST, payload: {} });
+    try {
+        const { data } = await axios.post("http://localhost:8080/api/compute/updateInstance", {
+            hostname: hostname,
+            ownerID: ownerID,
+            disk: disk,
+            cpu: cpu,
+            ram: ram,
+            id: id
+        });
+        if (data.message.includes("error")) throw data.message
+        console.log("action payload: ", data)
+        dispatch({ type: UPDATE_INSTANCE_SUCCESS, payload: data.message });
+    } catch (error) {
+        dispatch({ type: UPDATE_INSTANCE_FAIL, payload: error });
+    }
+}
+
+export {
+    listInstances,
+    changeInstanceStatus,
     getInstanceByID,
     createInstance,
     deleteInstance,
-    getInstanceByOwnerID
+    getInstanceByOwnerID,
+    updateInstance
 };

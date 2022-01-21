@@ -46,14 +46,5 @@ message TierUsersRequest {
 }
 
 service AuthService {
-    rpc register(User) returns (Message) {}
-    rpc login(LoginRequest) returns (Message) {}
-    rpc createTier(Tier) returns (Message) {}
-    rpc getListTiers(Empty) returns (Tiers) {}
-    rpc getUserByTier(Message) returns (Users) {}
-    rpc changeUserStatus(Message) returns (Message) {}
-    rpc deleteUserByID(Message) returns (Message) {}
-    rpc updateTierUsers(TierUsersRequest) returns (Message) {}
-    rpc changeUserTier(TierUsersRequest) returns (Message) {}
     rpc getTierByUserID(Message) returns (Tier) {}
 }

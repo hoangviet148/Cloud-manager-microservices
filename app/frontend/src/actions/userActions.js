@@ -31,6 +31,7 @@ const signin = (email, password) => async (dispatch) => {
     console.log("userInfo: ", userInfo)
     dispatch({ type: USER_SIGNIN_SUCCESS, payload: userInfo });
     Cookie.set('userInfo', userInfo);
+    Cookie.set('tier', userInfo.tier)
   } catch (error) {
     dispatch({ type: USER_SIGNIN_FAIL, payload: error.message });
   }

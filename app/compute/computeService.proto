@@ -14,6 +14,15 @@ message Compute {
     string IPv4 = 9;
 }
 
+message UpdateComputeMessage {
+    string hostname = 1;
+    string ownerID = 2;
+    string disk = 3;
+    string cpu = 4;
+    string ram = 5;
+    string id = 6;
+}
+
 message Computes {
     repeated Compute instances = 1;
 }
@@ -38,4 +47,5 @@ service ComputeService {
     rpc changeInstanceStatus(StatusMessage) returns (Message) {}
     rpc deleteInstance(InstanceID) returns (Message) {}
     rpc getInstanceByOwnerID(Message) returns (Computes) {}
+    rpc updateInstance(UpdateComputeMessage) returns (Message) {}
 }

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Link from '@material-ui/core/Link';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
+import TextField from '@mui/material/TextField';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
@@ -14,7 +14,7 @@ import Select from "@material-ui/core/Select";
 import MenuItem from '@material-ui/core/MenuItem';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import { getAllNetworks } from '../actions/networkActions';
-import { createInstance, getInstanceByID } from '../actions/computeActions';
+import { updateInstance, getInstanceByID } from '../actions/computeActions';
 import Cookie from 'js-cookie';
 import Alert from '@mui/material/Alert';
 
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function InstanceCreate(props) {
+function InstanceUpdate(props) {
     console.log("InstanceCreate screen: ", props)
     const [displayError, setDisplayError] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
@@ -47,8 +47,6 @@ function InstanceCreate(props) {
     const [CPU, setCPU] = useState('');
     const [ram, setRam] = useState('');
     const [disk, setDisk] = useState('');
-    const [network, setNetwork] = useState('');
-    const [page, setPage] = useState(true);
     const dispatch = useDispatch();
 
     const res = useSelector(state => {
@@ -56,41 +54,42 @@ function InstanceCreate(props) {
         return state.AllNetworks.networks
     });
 
-    // const instance = useSelector(state => {
-    //     console.log(state)
-    //     return state.InstanceByID.instance
-    // });
+    const instance = useSelector(state => {
+        console.log(state)
+        return state.InstanceByID.instance
+    });
+    console.log("instance: ", instance)
 
-    const createInstanceStatus = useSelector(state => {
-        //console.log("==state==: ", state)
-        return state.createInstance
+
+    const updateInstanceStatus = useSelector(state => {
+        return state.updateInstance
     });
 
-    console.log("createInstanceStatus: ", createInstanceStatus)
+    console.log("updateInstanceStatus: ", updateInstanceStatus)
 
     const networks = res?.networks;
     console.log("networks: ", networks)
 
     const classes = useStyles();
 
-    useEffect(() => {
-        console.log("useEffect")
+    useEffect(async () => {
+        console.log("useEffect", props)
         //setPage(props?.match.url.includes("update"))
         dispatch(getAllNetworks());
-        //dispatch(getInstanceByID(props.match.params.id))
-        if (createInstanceStatus.error) {
+        await dispatch(getInstanceByID(props.match.params.id))
+        if (updateInstanceStatus.error) {
             setDisplayError(true)
-            setErrorMessage(createInstanceStatus.error)
+            setErrorMessage(updateInstanceStatus.error)
         }
-        if (createInstanceStatus.message === 'Create Compute success!') {
+        if (updateInstanceStatus.message === 'Update Compute success!') {
             props.history.push("/instances");
         }
-    }, [createInstanceStatus.error, createInstanceStatus.message])
+    }, [updateInstanceStatus.error, updateInstanceStatus.message])
 
     const submitHandler = async (e) => {
         console.log("submitHandler")
         e.preventDefault();
-        await dispatch(createInstance(name, Cookie.getJSON('userInfo')?.userId, CPU, ram, disk, network))
+        await dispatch(updateInstance(name, Cookie.getJSON('userInfo')?.userId, disk, ram, CPU, props?.match.params.id))
     }
 
     return (
@@ -107,7 +106,7 @@ function InstanceCreate(props) {
                 <CssBaseline />
                 <div className={classes.paper}>
                     <Typography component="h1" variant="h5">
-                        Create Instance
+                        Update Instance
                     </Typography>
                     <form className={classes.form} onSubmit={submitHandler}>
                         <Grid item xs={8}>
@@ -119,7 +118,7 @@ function InstanceCreate(props) {
                                 label="Name"
                                 name="name"
                                 id="name"
-                                // value={page ? instance?.hostname : ""}
+                                value={instance?.hostname}
                                 autoFocus
                                 onChange={(e) => setName(e.target.value)}
                             />
@@ -135,7 +134,7 @@ function InstanceCreate(props) {
                                 id="CPU"
                                 type="number"
                                 min="1"
-                                // value={page ? instance?.cpu : ""}
+                                value={instance?.cpu}
                                 autoComplete="CPU"
                                 autoFocus
                                 onChange={(e) => setCPU(e.target.value)}
@@ -152,7 +151,7 @@ function InstanceCreate(props) {
                                 id="ram"
                                 type="number"
                                 min="1"
-                                // value={page ? instance?.ram : ""}
+                                value={instance?.ram}
                                 autoComplete="ram"
                                 autoFocus
                                 onChange={(e) => setRam(e.target.value)}
@@ -169,28 +168,13 @@ function InstanceCreate(props) {
                                 id="disk"
                                 type="number"
                                 min="1"
-                                // value={page ? instance?.disk : ""}
+                                value={instance?.disk}
                                 autoComplete="disk"
                                 autoFocus
                                 onChange={(e) => setDisk(e.target.value)}
                             />
                         </Grid>
-                        <Grid item xs={8}>
-                            <FormControl variant="outlined" style={{ width: '100%', marginTop: '2rem' }} margin="normal">
-                                <InputLabel id="network">Network</InputLabel>
-                                <Select
-                                    id="network"
-                                    label="network"
-                                    displayEmpty
-                                    name="network"
-                                    // value={page ? instance?.disk : ""}
-                                    onChange={(e) => setNetwork(e.target.value)}
-                                    defaultValue="sdfsf"
-                                >
-                                    {networks?.length && networks.filter(network => network.status === "active").map(network => (<MenuItem value={network.id}>{network.name}</MenuItem>))}
-                                </Select>
-                            </FormControl>
-                        </Grid>
+
                         {displayError && <Alert severity="error">{errorMessage}</Alert>}
                         <Button
                             type="submit"
@@ -199,7 +183,7 @@ function InstanceCreate(props) {
                             color="primary"
                             className={classes.submit}
                         >
-                            Create
+                            Update
                         </Button>
 
                     </form>
@@ -209,4 +193,4 @@ function InstanceCreate(props) {
     )
 }
 
-export default InstanceCreate
+export default InstanceUpdate

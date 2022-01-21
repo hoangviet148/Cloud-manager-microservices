@@ -59,6 +59,10 @@ function TierList(props) {
                         <TableRow>
                             <TableCell>Name</TableCell>
                             <TableCell>Cost</TableCell>
+                            <TableCell>Max Instances</TableCell>
+                            <TableCell>Max Ram</TableCell>
+                            <TableCell>Max Cpu</TableCell>
+                            <TableCell>Max Storage</TableCell>
                             <TableCell>Analytics</TableCell>
                             <TableCell>Users</TableCell>
                             <TableCell>Actions</TableCell>
@@ -68,6 +72,10 @@ function TierList(props) {
                         {tiers?.length && tiers?.map(tier => (<TableRow key={tier.id}>
                             <TableCell><Link href={`/tier/${tier.name}`}>{tier.name}</Link></TableCell>
                             <TableCell>{tier.cost}</TableCell>
+                            <TableCell>{tier.pricingDetail[3]}</TableCell>
+                            <TableCell>{tier.pricingDetail[1]}</TableCell>
+                            <TableCell>{tier.pricingDetail[2]}</TableCell>
+                            <TableCell>{tier.pricingDetail[0]}</TableCell>
                             <TableCell>{tier.analytics.toString()}</TableCell>
                             <TableCell>{tier.users !== undefined ? tier.users.length : 0}</TableCell>
                             <TableCell>

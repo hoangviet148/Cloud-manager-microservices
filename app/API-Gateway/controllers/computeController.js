@@ -90,3 +90,23 @@ module.exports.getInstanceByOwnerID = async (req, res) => {
         return res.status(400).json({ message: error + " " })
     }
 }
+
+module.exports.updateInstance = async (req, res) => {
+    console.log("api gateway - updateInstance controller")
+    try {
+        let compute = {
+            "hostname": req.body.hostname,
+            "ownerID": req.body.ownerID,
+            "disk": req.body.disk,
+            "cpu": req.body.cpu,
+            "ram": req.body.ram,
+            "id": req.body.id
+        }
+        let response = await computeClient.updateInstance(compute);
+        console.log("response: ", response)
+        return res.status(200).json(response)
+    } catch (error) {
+        console.log(error + " ")
+        return res.status(400).json({ message: error + " " })
+    }
+}

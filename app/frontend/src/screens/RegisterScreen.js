@@ -55,12 +55,10 @@ export default function RegisterScreen(props) {
     const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
     console.log(redirect)
     useEffect(() => {
-        if (userInfo) {
-            props.history.push(redirect);
+        if(userInfo) {
+            window.location.href = 'http://localhost:3000/signin';
+
         }
-        return () => {
-            //
-        };
     }, [userInfo]);
 
 

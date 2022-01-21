@@ -219,6 +219,20 @@ app.addService(authProto.AuthService.service, {
             console.log("error: ", error)
             callback(null, { "message": error + " " });
         }
+    },
+    getTierByUserID: async (call, callback) => {
+        console.log("auth-service - getTierByUserID", call.request)
+        const id = call.request.message
+        
+        try {
+            let user = await User.findOne({ _id: id });
+            let tier = await Tier.findOne({ name: user.tier })
+            console.log("res ===: ", tier)
+            callback(null, tier);
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { "message": error + " " });
+        }
     }
 })
 

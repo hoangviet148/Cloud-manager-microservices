@@ -91,6 +91,17 @@ app.addService(networkProto.NetworkService.service, {
             console.log("error: ", error)
             callback(null, { message: error });
         }
+    },
+    getNetworkByID: async (call, callback) => {
+        console.log("req:" , call.request)
+        try {
+            const network = await Network.findOne({ _id: call.request.message });
+            console.log(network)
+            callback(null, network);
+        } catch (error) {
+            console.log("error: ", error)
+            callback(null, { message: error });
+        }
     }
 })
 

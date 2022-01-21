@@ -26,5 +26,8 @@ router
 router
     .route("/getInstanceByOwnerID/:ownerID")
     .get(controller.getInstanceByOwnerID);
-
+    
+router
+    .route("/updateInstance")
+    .post(controller.updateInstance);
 module.exports = router;

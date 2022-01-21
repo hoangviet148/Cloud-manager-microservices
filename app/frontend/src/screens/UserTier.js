@@ -15,6 +15,8 @@ import { changeUserTier } from '../actions/userActions';
 import Cookie from 'js-cookie';
 import './pricingTable.css';
 import Button from '@mui/material/Button';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@mui/material/Grid';
 
 const data = [
     {
@@ -86,10 +88,9 @@ function UserTier(props) {
     const changeUserTierRes = useSelector(state => state.changeUserTier);
     console.log("payload UserTier: ", tierList, changeUserTierRes)
     const dispatch = useDispatch();
-
     const buttonHandle = (tier) => {
-        console.log("buttonHandle")
         dispatch(changeUserTier(tier, userId));
+        Cookie.set('tier', tier)
     }
 
     useEffect(() => {
@@ -103,7 +104,10 @@ function UserTier(props) {
                 <ul class="price">
                     <li class="header">{tier.name}</li>
                     <li class="grey">$ {tier.cost} / month</li>
-                    {tier.pricingDetail.map(item => <li>{item}</li>)}
+                    <li>{tier.pricingDetail[0]} GB Storage</li>
+                    <li>{tier.pricingDetail[1]} GB Ram</li>
+                    <li>{tier.pricingDetail[2]} CPUS</li>
+                    <li>{tier.pricingDetail[3]} Instances</li>
                     {tier.users?.indexOf(userId) > -1 ? <li><strong><p>Current Tier</p></strong></li> : <li><Button onClick={() => buttonHandle(tier.name)} variant="contained">CHOOSE</Button></li>}
                 </ul>
             </div>
@@ -112,34 +116,41 @@ function UserTier(props) {
 
     return (
         <div>
-            <div>
-                {tierList?.tiers?.map(tier => PricingSlot(tier))}
-            </div>
-            {/* <div style={{ position: 'relative', height: '100%', width: "100%" }}>
-                <ComposedChart
-                    width={1800}
-                    height={400}
-                    data={data}
-                    margin={{
-                        top: 20,
-                        right: 20,
-                        bottom: 0,
-                        left: 20,
-                    }}
-                >
-                    <CartesianGrid stroke="#f5f5f5" />
-                    <XAxis dataKey="name" scale="band" />
-                    <YAxis />
-                    <Tooltip />
-                    <Legend />
-                    <Bar dataKey="money" barSize={40} fill="#413ea0" />
-                    <Line type="monotone" dataKey="money" stroke="#ff7300" />
-                </ComposedChart>
-            </div> */}
+            <Grid container spacing={1}>
+                <Grid item xs={12}>
+                    <Paper>
+                        {tierList?.tiers?.map(tier => PricingSlot(tier))}
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper>
+                        <ComposedChart
+                            width={1800}
+                            height={300}
+                            data={data}
+                            margin={{
+                                top: 10,
+                                right: 20,
+                                bottom: 0,
+                                left: 20,
+                            }}
+                        >
+                            <CartesianGrid stroke="#f5f5f5" />
+                            <XAxis dataKey="name" scale="band" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="money" barSize={40} fill="#413ea0" />
+                            <Line type="monotone" dataKey="money" stroke="#ff7300" />
+                        </ComposedChart>
+                    </Paper>
+                </Grid>
+            </Grid>
+
+
+
         </div>
     )
 }
-
-
 
 export default UserTier;

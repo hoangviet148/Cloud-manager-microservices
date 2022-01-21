@@ -72,6 +72,7 @@ function InstanceList(props) {
                     <TableHead>
                         <TableRow>
                             <TableCell>Name</TableCell>
+                            <TableCell>IPv4</TableCell>
                             <TableCell>Status</TableCell>
                             <TableCell>CPU's</TableCell>
                             <TableCell>Memory</TableCell>
@@ -82,6 +83,7 @@ function InstanceList(props) {
                     <TableBody>
                         {instances?.length && instances?.filter(instance => instance.ownerID == userID).map(instance => (<TableRow key={instance.hostname}>
                             <TableCell><Link href={`/instance/${instance._id}`}>{instance.hostname}</Link></TableCell>
+                            <TableCell>{instance.IPv4}</TableCell>
                             <TableCell style={{ color: instance.status === "running" ? "green" : "red" }}>{instance.status}</TableCell>
                             <TableCell>{instance.cpu}</TableCell>
                             <TableCell>{instance.ram} GB</TableCell>

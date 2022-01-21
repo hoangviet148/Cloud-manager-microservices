@@ -31,6 +31,8 @@ import TierList from './screens/TierList';
 import TierDetail from './screens/TierDetail';
 import TierCreateForm from './screens/TierCreateForm';
 import InstanceCreate from './screens/InstanceCreate';
+import InstanceUpdate from './screens/InstanceUpdate';
+import ProfileScreen from './screens/ProfileScreen';
 import NetworkList from './screens/NetworkList';
 import UserTier from './screens/UserTier';
 import Overview from './screens/Overview';
@@ -221,18 +223,6 @@ export default function SideBar() {
                             </Link>
                         </ListItem>
                         <ListItem button>
-                            <Link to="/resource" style={{ textDecoration: 'none', color: '#203040' }}>
-                                <Grid container>
-                                    <Grid item xs={6}>
-                                        <ListItemIcon style={{ paddingTop: '.2rem' }}><ChildCareIcon /></ListItemIcon>
-                                    </Grid>
-                                    <Grid item xs={6}>
-                                        <ListItemText style={{ paddingLeft: '0.2rem' }}>Storages</ListItemText>
-                                    </Grid>
-                                </Grid>
-                            </Link>
-                        </ListItem>
-                        <ListItem button>
                             <Link to="/overview" style={{ textDecoration: 'none', color: '#203040' }}>
                                 <Grid container>
                                     <Grid item xs={6}>
@@ -258,9 +248,10 @@ export default function SideBar() {
                         <Route path="/tier/:tier" component={TierDetail} />
                         <Route path="/tier-create" component={TierCreateForm} />
                         <Route path="/instance-create" component={InstanceCreate} />
-                        <Route path="/instance-update/:id" component={InstanceCreate} />
+                        <Route path="/instance-update/:id" component={InstanceUpdate} />
                         <Route path="/networks" component={NetworkList} />
                         <Route path="/overview" component={Overview} />
+                        <Route path="/profile" component={ProfileScreen} />
                     </div>
                 </main>
             </div>

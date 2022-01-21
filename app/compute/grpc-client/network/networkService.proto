@@ -21,9 +21,5 @@ message Message {
 }
 
 service NetworkService {
-    rpc createNetwork(Network) returns (Message) {}
-    rpc getAllNetworks(Empty) returns (Networks) {}
-    rpc deleteNetworkByID(Message) returns (Message) {}
-    rpc changeNetworkStatus(Message) returns (Message) {}
     rpc getNetworkByID(Message) returns (Network) {}
 }
